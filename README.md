@@ -35,6 +35,29 @@ Let's move to folder where we'll work more, the `src` folder:
 3. `main.ts` is where the app start running.
 4. `favicon.ico` is the app's icon, just as you would find in any web site.
 5. `app` folder where new components willbe added later:
-   1. `app.component.ts` is the source file that describes the app-root component. This is the top-level Angular component in the app. A component is the basic building block of an Angular application. The component description includes the component's code, HTML template, and styles, which can be described in this file, or in separate files. In this app, the styles are in a separate file while the component's code and HTML template are in this file.
-   2. `app.component.css` is the style sheet for this component.
+   - `app.component.ts` is the source file that describes the app-root component. This is the top-level Angular component in the app. A component is the basic building block of an Angular application. The component description includes the component's code, HTML template, and styles, which can be described in this file, or in separate files. In this app, the styles are in a separate file while the component's code and HTML template are in this file.
+   - `app.component.css` is the style sheet for this component.
 6. `assets` folder contains images used by the app
+
+## Components
+
+New component can be generated automatically or manually.
+To create automatically a component called `servers`, run:
+`ng generate component servers`
+or the short command
+`ng g c servers`
+It will generate 4 files in a new folder `./server`:
+
+1. `servers.component.ts` (containing the logic)
+2. `servers.component.html` (containing the template HTML)
+3. `servers.component.css` (containing the style CSS)
+4. `servers.component.spec.ts` (file to test the ts logic)
+   and update `app.module.ts`:
+   you should add in declaration the new component class
+   `declarations: [AppComponent, ServersComponent],`
+   in order to be able to use in `app.component.html` the `<app-servers></app-servers>` component.
+
+If you are still not interested in testing, you can skip the creation of the `spec.ts` file, adding `--skip-tests true` at the end of you command line:
+`ng g c servers --skip-tests true`
+
+More details can be found in [component.md](./component.md)
