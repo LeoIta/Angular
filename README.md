@@ -60,4 +60,4 @@ It will generate 4 files in a new folder `./server`:
 If you are still not interested in testing, you can skip the creation of the `spec.ts` file, adding `--skip-tests true` at the end of you command line:
 `ng g c servers --skip-tests true`
 
-More details can be found in [component.md](./component.md)
+More details can be found in [component.md](./src/documentation/component.md)

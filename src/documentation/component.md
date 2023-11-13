@@ -147,3 +147,7 @@ Possible values are:
 - `ViewEncapsulation.ShadowDom`: Use the browser's native Shadow DOM API to encapsulate styles. _[similar to `Emulated` but `Shadow DOM API` could not be supported by some browsers]_
 
 Full documentation of Component decorator can be found on [Angular documentation](https://angular.io/api/core/Component)
+
+## Component life
+
+Read about it in [component-life.md](./component-life.md) or on [Angular documentation](https://angular.io/guide/lifecycle-hooks)
