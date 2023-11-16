@@ -61,3 +61,12 @@ If you are still not interested in testing, you can skip the creation of the `sp
 `ng g c servers --skip-tests true`
 
 More details can be found in [component.md](./src/documentation/component.md)
+
+## Databinding
+
+`Data binding` is an Angular is the synchronization between the model and the view.
+It creates a communication between the `business logic` (servers.component.ts) and the `template` (servers.component.html)
+
+![databinding](./src/assets/databinding.jpg "databinding")
+
+More details can be found in [data-binding.md](./src/documentation/data-binding.md)
