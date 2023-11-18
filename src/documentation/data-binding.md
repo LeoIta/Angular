@@ -14,7 +14,7 @@ To send data, from the user interface to the business logic, you can use:
 
 To send data in both side at the same time, you can use:
 
-- [`two-ways-binding`](#two-ways-binding).
+- [`two-way-binding`](#two-way-binding).
 
 ---
 
@@ -192,4 +192,45 @@ The `event binding` has the syntax `(event) = "expression"` where event can be:
 
 **Please note** that you can pass the event itself in the method that will be invoked by the event (_onInput($event)_) using the `$event`.
 
-## Two-Ways-Binding
+## Two-Way-Binding
+
+The `two-way-binding` allows to udpate a property from both sides:
+
+- `user side` (_via events triggered by the user_)
+- `business logic side` (_via methods written in typescript_).
+
+Let's see an example:
+`two-way-binding.component.ts`
+
+```
+username = '';
+
+onReset() {
+  this.username = '';
+}
+```
+
+`two-way-binding.component.html`
+
+```
+<h1>Two Way Binding</h1>
+<label for="name">Name</label>
+<input type="text" name="name" [(ngModel)]="username">
+<button (click)="onReset()">Reset</button>
+<p>Hello {{username!=''?username:'unknown user'}}</p>
+```
+
+**Please note** that you can get the following error trying using `ngModel`:
+
+![ngModel-error](../assets/ngModel-error.jpg "ngModel-error")
+
+To fix it, you must add in the `app.module.ts`:
+
+1. the `FormsModule` to the `import[]` array
+2. the import for `FormsModule` from `@angular/forms`:
+   ```
+   import { FormsModule } from '@angular/forms';
+   ```
+
+The `two way binding` acts as a combination of `event binding` and `property binding`, in fact, its syntax is also a combination of their syntax:\
+`[(ngModel)] = data` where `data` is a variable defined in `property-binding.component.ts` (e.g. _username_).

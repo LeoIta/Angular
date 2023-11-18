@@ -1,0 +1,12 @@
+<h1>Two Way Binding</h1>
+<!-- <label for="name">Name</label>
+<input (input)="onInput($event)" type="text" name="name" [value]="defaultValue">
+<button (click)="onReset()">Reset</button>
+<p>Hello {{userName}}</p> -->
+
+<!-- CAN BE SIMPLIFIED WITH -->
+
+<label for="name">Name</label>
+<input type="text" name="name" [(ngModel)]="username">
+<button (click)="onReset()">Reset</button>
+<p>Hello {{username!=''?username:'unknown user'}}</p>
