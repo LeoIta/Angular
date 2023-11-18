@@ -1,3 +1,8 @@
-<app-servers *ngIf="bool"></app-servers>
-<app-life-cycle (boolEvent)="updateBool($event)" *ngIf="bool" [name]="label"></app-life-cycle>
-<app-component-binding *ngIf="!bool"></app-component-binding>
+<div *ngIf="bool">
+  <app-life-cycle (boolEvent)="updateBool($event)" [name]="label"></app-life-cycle>
+  <app-servers></app-servers>
+  <app-component-binding></app-component-binding>
+</div>
+<div *ngIf="!bool">
+  <app-event-binding></app-event-binding>
+</div>

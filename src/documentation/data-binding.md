@@ -115,10 +115,10 @@ In our example we have: \
 }
 ```
 
+This implementation will change every 2 seconds the value of the boolean `disabled` in `component-binding.component.ts`.
+
 The customer will see, based on the value of `disabled` the following view:
 ![property binding](../assets/property-binding.jpg "property binding")
-
-This implementation will change every 2 seconds the value of the boolean `disabled` in `component-binding.component.ts`.
 
 From the example above you can see that `property binding` has the syntax `[property]="data"` where `data` could be:
 
@@ -128,5 +128,63 @@ From the example above you can see that `property binding` has the syntax `[prop
 4. **any typeScript code** (e.g. _disabled?'red':'green'_)
 
 ## Event Binding
+
+The `event binding` is similar to the events in JS, where you can use both build-in events or customized events. \
+There is a small difference on how you call the event in Angular comparing with JS, `Angular events` do not start with 'on' but replaces it adding parenteses before and after the event name.
+
+```
+JS event      => onclick = "expression"
+Angular event => (click) = "expression"
+```
+
+Let's see an example:
+
+`event-binding.component.html`
+
+```
+<h1>Event binding</h1>
+<label for="name">Name</label>
+<input (input)="onInput($event)" type="text" name="name" [value]="defaultValue">
+<button (click)="onClick()">Reset</button>
+<button (click)="color='red'">Change text color to red</button>
+<p [style.color]="color">Hello {{userName}}</p>
+```
+
+`event-binding.component.ts`
+
+```
+userName = 'unknown user';
+  defaultValue = '';
+  color = 'black';
+
+onClick() {
+  this.defaultValue = '';
+  this.userName = 'unknown user';
+}
+
+onInput(event: any) {
+  this.userName = event.target.value;
+  this.defaultValue = this.userName;
+}
+```
+
+`onInput()` method can be more specific in the argument type definition, so you can define event of type `Event`, but later you need to cast `event.target` to a `HTMLInputElement` in order to allow Angular understanding the `.value` command.
+
+```
+onInput(event: Event) {
+  this.userName = (<HTMLInputElement>event.target).value;
+  this.defaultValue = this.userName;
+}
+```
+
+In the above example we have an `input field`, a `reset button`, a `change color button` and a `paragraph`. \
+Every time you update the value in the `input field`, the paragraph will say hi to that username. The `reset button` will reset the username to the default value, and the `change color button` will change the text color of the greating message.
+
+The `event binding` has the syntax `(event) = "expression"` where event can be:
+
+1. any method defined in `event-binding.component.ts`(e.g. _onClick()_ or _onInput($event)_)
+2. any typeScript code (_(click)="color='red'"_)
+
+**Please note** that you can pass the event itself in the method that will be invoked by the event (_onInput($event)_) using the `$event`.
 
 ## Two-Ways-Binding

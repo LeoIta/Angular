@@ -1,0 +1,6 @@
+<h1>Event binding</h1>
+<label for="name">Name</label>
+<input (input)="onInput($event)" type="text" name="name" [value]="defaultValue">
+<button (click)="onClick()">Reset</button>
+<button (click)="color='red'">Change text color to red</button>
+<p [style.color]="color">Hello {{userName}}</p>
