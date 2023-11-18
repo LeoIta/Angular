@@ -1,7 +1,8 @@
 <div *ngIf="bool">
   <app-life-cycle (boolEvent)="updateBool($event)" [name]="label"></app-life-cycle>
   <app-servers></app-servers>
-  <app-component-binding></app-component-binding>
+  <app-string-interpolation></app-string-interpolation>
+  <app-property-binding></app-property-binding>
 </div>
 <div *ngIf="!bool">
   <app-event-binding></app-event-binding>

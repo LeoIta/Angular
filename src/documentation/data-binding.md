@@ -22,7 +22,9 @@ To send data in both side at the same time, you can use:
 
 ## String Interpolation
 
-To understand the different ways of using the `string interpolation`, you can define in the `servers.component.ts` a variable called servers and a method to get the server status from the server name.
+To understand the possible uses of the `string interpolation`, let's see an example:
+
+`servers.component.ts`
 
 ```
   servers = [new Server('server1', true), new Server('server2', false)];
@@ -33,7 +35,9 @@ To understand the different ways of using the `string interpolation`, you can de
   }
 ```
 
-The variable `servers` is an Array of `Server` objects defined in `server.model.ts`
+The variable `servers` is an Array of `Server` objects defined in:
+
+`server.model.ts`
 
 ```
 export class Server {
@@ -41,9 +45,11 @@ export class Server {
 }
 ```
 
-Now we can use the string interpolation to display data in the `servers.component.html` file.
+The method `getServerStatus()` returns the server status from the server name.
 
-Writing in your html file the follow:
+Now you can use the `string interpolation` to display data in:
+
+`servers.component.html`
 
 ```
 <p>servers works!</p>
@@ -53,7 +59,6 @@ Writing in your html file the follow:
 ```
 
 on the screen you'll see:
-
 ![string interpolation](../assets/string-interpolation.jpg "string interpolation")
 
 From the example above you can see that `string interpolation` has the syntax `{{data}}` where `data` could be:
@@ -63,14 +68,13 @@ From the example above you can see that `string interpolation` has the syntax `{
 3. **any method** defined in `servers.component.ts` (e.g. _getServerStatus('server2')_)
 4. **any typeScript code** (e.g. _servers[0].online && servers[1].online_)
 
----
-
 ## Property Binding
 
 Using `property binding` you can make dynamic any property.
 
-In our example we have: \
-`component-binding.component.html`
+In the example we have:
+
+`property-binding.component.html`
 
 ```
 <h1>Property binding</h1>
@@ -81,7 +85,7 @@ In our example we have: \
 </div>
 ```
 
-`component-binding.component.ts`
+`property-binding.component.ts`
 
 ```
   disabled = true;
@@ -95,7 +99,7 @@ In our example we have: \
   }
 ```
 
-`component-binding.component.css`
+`property-binding.component.css`
 
 ```
 .circle {
@@ -115,7 +119,7 @@ In our example we have: \
 }
 ```
 
-This implementation will change every 2 seconds the value of the boolean `disabled` in `component-binding.component.ts`.
+This implementation will change every 2 seconds the value of the boolean `disabled` in `property-binding.component.ts`.
 
 The customer will see, based on the value of `disabled` the following view:
 ![property binding](../assets/property-binding.jpg "property binding")
@@ -123,13 +127,14 @@ The customer will see, based on the value of `disabled` the following view:
 From the example above you can see that `property binding` has the syntax `[property]="data"` where `data` could be:
 
 1. **any string** (e.g. _'red'_)
-2. **any variable** defined in `component-binding.component.ts` (e.g. _disabled_)
-3. **any method** defined in `component-binding.component.ts` (e.g. _getTextColor()_)
+2. **any variable** defined in `property-binding.component.ts` (e.g. _disabled_)
+3. **any method** defined in `property-binding.component.ts` (e.g. _getTextColor()_)
 4. **any typeScript code** (e.g. _disabled?'red':'green'_)
 
 ## Event Binding
 
-The `event binding` is similar to the events in JS, where you can use both build-in events or customized events. \
+The `event binding` is similar to the events in JS, where you can use both build-in events or customized events.
+
 There is a small difference on how you call the event in Angular comparing with JS, `Angular events` do not start with 'on' but replaces it adding parenteses before and after the event name.
 
 ```
