@@ -56,7 +56,7 @@ on the screen you'll see:
 
 ![string interpolation](../assets/string-interpolation.jpg "string interpolation")
 
-From the example above you can see that `string interpolation` has the syntax `{{data}}` where data could be:
+From the example above you can see that `string interpolation` has the syntax `{{data}}` where `data` could be:
 
 1. **any string** (e.g. _'server2'_)
 2. **any variable** defined in `servers.component.ts` (e.g. _servers[0].online_ or _servers[0].name_)
@@ -66,6 +66,66 @@ From the example above you can see that `string interpolation` has the syntax `{
 ---
 
 ## Property Binding
+
+Using `property binding` you can make dynamic any property.
+
+In our example we have: \
+`component-binding.component.html`
+
+```
+<h1>Property binding</h1>
+<button [style.background-color]="'red'" [style.color]="getTextColor()">Red button</button>
+<div class="flex-container">
+  <button [disabled]="disabled">Button is {{disabled?'disabled':'active'}}</button>
+  <p [style.background-color]="disabled?'red':'green'" class="circle"></p>
+</div>
+```
+
+`component-binding.component.ts`
+
+```
+  disabled = true;
+  constructor() {
+    setInterval(() => {
+      this.disabled = !this.disabled;
+    }, 2000);
+  }
+  getTextColor() {
+    return 'white';
+  }
+```
+
+`component-binding.component.css`
+
+```
+.circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  width: 150px;
+  justify-content: space-between;
+  max-height: 20px;
+  align-items: center;
+  margin: 10px 0px;
+}
+```
+
+The customer will see, based on the value of `disabled` the following view:
+![property binding](../assets/property-binding.jpg "property binding")
+
+This implementation will change every 2 seconds the value of the boolean `disabled` in `component-binding.component.ts`.
+
+From the example above you can see that `property binding` has the syntax `[property]="data"` where `data` could be:
+
+1. **any string** (e.g. _'red'_)
+2. **any variable** defined in `component-binding.component.ts` (e.g. _disabled_)
+3. **any method** defined in `component-binding.component.ts` (e.g. _getTextColor()_)
+4. **any typeScript code** (e.g. _disabled?'red':'green'_)
 
 ## Event Binding
 

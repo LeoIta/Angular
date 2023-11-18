@@ -7,6 +7,8 @@ import { Server } from '../server.model';
   styleUrls: ['./servers.component.css'],
 })
 export class ServersComponent {
+  isDisabled = false;
+
   servers = [new Server('server1', true), new Server('server2', false)];
 
   getServerStatus(serverName: string): boolean {

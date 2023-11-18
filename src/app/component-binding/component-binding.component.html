@@ -1,0 +1,6 @@
+<h1>Property binding</h1>
+<button [style.background-color]="'red'" [style.color]="getTextColor()">Red button</button>
+<div class="flex-container">
+  <button [disabled]="disabled">Button is {{disabled?'disabled':'active'}}</button>
+  <p [style.background-color]="disabled?'red':'green'" class="circle"></p>
+</div>

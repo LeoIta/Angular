@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Angular';
+  label = 'show current example';
   bool = true;
 
   updateBool(display: boolean) {
