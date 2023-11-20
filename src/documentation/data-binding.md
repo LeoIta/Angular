@@ -72,7 +72,7 @@ From the example above you can see that `string interpolation` has the syntax `{
 
 Using `property binding` you can make dynamic any property.
 
-In the example we have:
+In the example you have:
 
 `property-binding.component.html`
 
@@ -182,7 +182,7 @@ onInput(event: Event) {
 }
 ```
 
-In the above example we have an `input field`, a `reset button`, a `change color button` and a `paragraph`. \
+In the above example you have an `input field`, a `reset button`, a `change color button` and a `paragraph`. \
 Every time you update the value in the `input field`, the paragraph will say hi to that username. The `reset button` will reset the username to the default value, and the `change color button` will change the text color of the greating message.
 
 The `event binding` has the syntax `(event) = "expression"` where event can be:

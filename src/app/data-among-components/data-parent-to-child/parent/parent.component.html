@@ -1,0 +1,10 @@
+<h2>Parent element</h2>
+<p>All elements of people array are :</p>
+<ol>
+  <li>{{people[0].username}} has id {{people[0].userId}}</li>
+  <li>{{people[1].username}} has id {{people[1].userId}}</li>
+  <li>{{people[2].username}} has id {{people[2].userId}}</li>
+</ol>
+<hr>
+<app-child-another [childAnotherArray]="people"></app-child-another>
+<app-child [childDataArray]="people"></app-child>

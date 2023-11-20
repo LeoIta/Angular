@@ -151,3 +151,7 @@ Full documentation of Component decorator can be found on [Angular documentation
 ## Component life
 
 Read about it in [component-life.md](./component-life.md) or on [Angular documentation](https://angular.io/guide/lifecycle-hooks)
+
+## How pass data among components
+
+Read about it in [components-communication.md](./components-communication.md)

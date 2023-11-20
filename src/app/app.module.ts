@@ -10,6 +10,9 @@ import { PropertyBindingComponent } from './property-binding/property-binding.co
 import { EventBindingComponent } from './event-binding/event-binding.component';
 import { ServersComponent } from './servers/servers.component';
 import { TwoWayBindingComponent } from './two-way-binding/two-way-binding.component';
+import { ParentComponent } from './data-among-components/data-parent-to-child/parent/parent.component';
+import { ChildComponent } from './data-among-components/data-parent-to-child/child/child.component';
+import { ChildAnotherComponent } from './data-among-components/data-parent-to-child/child-another/child-another.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { TwoWayBindingComponent } from './two-way-binding/two-way-binding.compon
     PropertyBindingComponent,
     EventBindingComponent,
     TwoWayBindingComponent,
+    ParentComponent,
+    ChildComponent,
+    ChildAnotherComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
