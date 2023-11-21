@@ -3,6 +3,7 @@
 It is possible to pass data among components:
 
 1. from parent to child using `@Input()` and `property binding`
+2. from child to parent using `@Output()`, `EventEmitter()` and `event binding`
 
 ## @Input() decorator
 
@@ -43,4 +44,59 @@ and consume it in the `child-another.component.html` using:
 
 ```
 {{childData[0].username}}
+```
+
+## @Ouput() decorator
+
+The `@Output()` decorator allows you to pass a variable defined in the child component, to his parent, generating a custom event. \
+`@Output()` can be used with or without arguments.
+
+Example:
+
+`myparent.component.ts`
+
+```
+classInternational: Person[] = [];
+onAdd(newClass: Person[]) {
+  console.log(this.classInternational);
+  this.classInternational = this.classInternational.concat(newClass);
+  console.log(this.classInternational);
+}
+```
+
+`my-first-child.component.ts`
+
+```
+@Output() firstClass = new EventEmitter<Person[]>();
+classIta = [new Person('Carlo', 'Utente01'), new Person('Paolo', 'Utente02')];
+onClick() {
+  this.firstClass.emit(this.classIta);
+}
+```
+
+Using the `@Output()` decorator without arguments, like `@Output() firstClass = new EventEmitter<Person[]>()`, in `my-first-child.component.ts`, you create an event emitter that will be triggered by the method `onClick()` when a button is clicked. This new event will emit an array of Person objects.
+It will be consumed by the parent as a classic `event binding` where the event is called as the variable `firstClass`.
+
+`my-second-child.component.ts`
+
+```
+@Output('engClass') secondClass = new EventEmitter<Person[]>();
+classEng = [new Person('Paul', 'User01'), new Person('Tom', 'User02')];
+onClick() {
+  this.secondClass.emit(this.classEng);
+}
+```
+
+Using the `@Output()` decorator with arguments, like `@Output('engClass') secondClass = new EventEmitter<Person[]>()`, in `my-second-child.component.ts`, you create an event emitter that will be triggered by the method `onClick()` when a button is clicked. This new event will emit an array of Person objects.
+It will be consumed by the parent as a classic `event binding` where the event is not called as the variable `secondClass`, but as the alias assigned in the `@Output()` decorator, that is , in this case, `engClass`.
+
+`myparent.component.html`
+
+```
+<h1>My parent</h1>
+<app-my-first-child (firstClass)="onAdd($event)"></app-my-first-child>
+<app-my-second-child (engClass)="onAdd($event)"></app-my-second-child>
+<div *ngFor="let person of classInternational">
+  <li>{{person.username}} with id {{person.userId}}</li>
+</div>
 ```

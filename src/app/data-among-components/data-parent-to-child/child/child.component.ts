@@ -5,7 +5,7 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { Person } from '../person.model';
+import { Person } from '../../person.model';
 
 @Component({
   selector: 'app-child',

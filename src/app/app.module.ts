@@ -13,6 +13,9 @@ import { TwoWayBindingComponent } from './two-way-binding/two-way-binding.compon
 import { ParentComponent } from './data-among-components/data-parent-to-child/parent/parent.component';
 import { ChildComponent } from './data-among-components/data-parent-to-child/child/child.component';
 import { ChildAnotherComponent } from './data-among-components/data-parent-to-child/child-another/child-another.component';
+import { MyparentComponent } from './data-among-components/data-child-to-parent/myparent/myparent.component';
+import { MyFirstChildComponent } from './data-among-components/data-child-to-parent/my-first-child/my-first-child.component';
+import { MySecondChildComponent } from './data-among-components/data-child-to-parent/my-second-child/my-second-child.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { ChildAnotherComponent } from './data-among-components/data-parent-to-ch
     ParentComponent,
     ChildComponent,
     ChildAnotherComponent,
+    MyparentComponent,
+    MyFirstChildComponent,
+    MySecondChildComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

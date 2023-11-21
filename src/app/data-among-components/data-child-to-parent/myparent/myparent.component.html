@@ -1,0 +1,6 @@
+<h1>My parent</h1>
+<app-my-first-child (firstClass)="onAdd($event)"></app-my-first-child>
+<app-my-second-child (engClass)="onAdd($event)"></app-my-second-child>
+<div *ngFor="let person of classInternational">
+  <li>{{person.username}} with id {{person.userId}}</li>
+</div>
