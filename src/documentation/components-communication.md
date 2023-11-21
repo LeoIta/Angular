@@ -4,6 +4,7 @@ It is possible to pass data among components:
 
 1. from parent to child using `@Input()` and `property binding`
 2. from child to parent using `@Output()`, `EventEmitter()` and `event binding`
+3. from HTML elements to component using `variable template`, `#selectorName` `@ViewChild('selectorName')`
 
 ## @Input() decorator
 
@@ -100,3 +101,43 @@ It will be consumed by the parent as a classic `event binding` where the event i
   <li>{{person.username}} with id {{person.userId}}</li>
 </div>
 ```
+
+## Variable template, @ViewChild() and ElementRef
+
+A faster/easier way, comparing with `data binding` to pass data from HTML element inside the component template and the component logic, is the use of `variable template` and `@ViewChild()` decorator.
+
+Let's see one example with an `input` HTML element:
+
+`variable-template.component.html`
+
+```
+<input type="text" (input)="onInput()" #inputForm value="default">
+{{myInput}}
+```
+
+`variable-template.component.ts`
+
+```
+myInput = '';
+@ViewChild('inputForm') myInputRefElement!: ElementRef<HTMLInputElement>;
+  onInput() {
+    this.myInput = this.myInputRefElement.nativeElement.value;
+  }
+```
+
+In order to define a `variable template`, in the component template, you add inside the element a selector, in our case `#inputForm`. \
+In order to call that element inside the `variable-template.component.ts`, you have to use the `@ViewChild()` decorator with argument the selector without the `#` sign, like `@ViewChild('inputForm')`.
+This variable with the `@ViewChild()` decorator can have a very generic type: \
+`@ViewChild('inputForm') myInputRefElement: any;` \
+a generic ElementRef type: \
+`ElementRef<HTMLInputElement>` '\
+or a specific ElementRef type for the specific HTML element \
+`ElementRef<HTMLInputElement>`
+
+To get the value of your input you'll use `myInputRefElement.nativeElement.value`.
+
+**Please note** that:
+
+- if you define type `ElementRef<HTMLInputElement>`, TypeScript will suggest both `native element` and `value`
+- if you define type `ElementRef`, TypeScript will suggest `native element` but not `value`
+- if you define type `any`, TypeScript will not suggest neither `native element` or `value`
