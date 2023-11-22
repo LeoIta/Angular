@@ -13,6 +13,14 @@ In order to work with Angular you'll need:
 1. to create a new project called `myProject` run `ng new myProject`
 2. if you want to use an old project, you have to go into the root folder and run `npm install` to install all the package listed inside the `package.json` file
 
+Index:
+
+1. [Run the application](#run-the-application)
+2. [Default Angular files and folders](#default-angular-files-and-folders)
+3. [Components](#components)
+4. [Data binding](#databinding)
+5. [Directives](#directives)
+
 ## Run the application
 
 Run `ng serve` to run the application. Navigate to `http://localhost:4200/`. The application will automatically reload if you change and save any of the source files.
@@ -70,3 +78,17 @@ It creates a communication between the `business logic` (servers.component.ts) a
 ![databinding](./src/assets/databinding.jpg "databinding")
 
 More details can be found in [data-binding.md](./src/documentation/data-binding.md)
+
+## Directives
+
+`Directives` are classes that add behavior to the elements.
+
+There are two main categories:
+
+1. `attribute directives` (e.g. `ngClass`, `ngStyle`, `ngModel`) modify the behavior or the appareance of an element, changing e.g. style
+2. `structural directives` (e.g. `*ngIf`, `ng-template`, `*ngFor`, `ngSwitch`, `*ngSwitchCase`) change the DOM adding/removing elements.
+   **Please note:** you CANNOT had two structural directives in the same element.
+
+You can use the build-in directives or you can build your own.
+
+More details can be found in [directives.md](./src/documentation/directives.md)

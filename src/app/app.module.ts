@@ -19,6 +19,7 @@ import { MySecondChildComponent } from './data-among-components/data-child-to-pa
 import { VariableTemplateComponent } from './data-among-components/variable-template/variable-template.component';
 import { MainComponent } from './data-among-components/ng-content/main/main.component';
 import { SlaveComponent } from './data-among-components/ng-content/slave/slave.component';
+import { NgStyleComponent } from './directives/ng-style/ng-style.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SlaveComponent } from './data-among-components/ng-content/slave/slave.c
     VariableTemplateComponent,
     MainComponent,
     SlaveComponent,
+    NgStyleComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
