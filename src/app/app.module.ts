@@ -20,6 +20,7 @@ import { VariableTemplateComponent } from './data-among-components/variable-temp
 import { MainComponent } from './data-among-components/ng-content/main/main.component';
 import { SlaveComponent } from './data-among-components/ng-content/slave/slave.component';
 import { NgStyleComponent } from './directives/ng-style/ng-style.component';
+import { NgClassComponent } from './directives/ng-class/ng-class.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NgStyleComponent } from './directives/ng-style/ng-style.component';
     MainComponent,
     SlaveComponent,
     NgStyleComponent,
+    NgClassComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

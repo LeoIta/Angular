@@ -15,6 +15,7 @@ Here below you'll see:
 
 1. [`ngModel`](#ngmodel)
 2. [`ngStyle`](#ngStyle)
+3. [`ngClass`](#ngclass)
 
 You can use multiple `attribute directives` in the same HTML element.
 
@@ -50,3 +51,17 @@ Example of the above options are showed inside `ng-style.component.html`:
 <p [ngStyle]="{backgroundColor:getColor(),color:alert?'white':'black'}">ngStyle</p>
 <p [ngStyle]="{'background-color':getColor(),'color':alert?'white':'black'}">ngStyle</p>
 ```
+
+### ngClass
+
+When you need to set too many properties with `ngStyle`, you can create in css `class selector`, to set all of them, and you can assign the class to the element.
+To do that you can use `ngClass` that use the `property binding`:
+`[ngClass]="data"`.
+
+The data can be:
+
+1. a class name (e.g. `"'default'"`)
+2. a variable storing the class name (e.g. `"className"`)
+3. a method that return a class name (e.g. `"getClass()"`)
+4. any code that return a class name (e.g. `"alert ? 'alert' : 'default'"`)
+5. an array to return multiple values (e.g. `"[getClass(), timer>9?'bigger':'']"`)

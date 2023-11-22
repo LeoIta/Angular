@@ -1,0 +1,18 @@
+.alert {
+  background-color: red;
+  color: white;
+}
+
+.default {
+  background-color: transparent;
+  color: black;
+}
+
+.success {
+  background-color: green;
+  color: whitesmoke;
+}
+
+.bigger {
+  font-size: x-large;
+}
