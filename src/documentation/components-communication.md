@@ -2,9 +2,10 @@
 
 It is possible to pass data among components:
 
-1. from parent to child using `@Input()` and `property binding`
-2. from child to parent using `@Output()`, `EventEmitter()` and `event binding`
-3. from HTML elements to component using `variable template`, `#selectorName` `@ViewChild('selectorName')`
+1. from parent to child using [`@Input()`](#input-decorator) and `property binding`
+2. from child to parent using [`@Output()`](#ouput-decorator), `EventEmitter()` and `event binding`
+3. from HTML elements to component using `variable template`, `#selectorName` [`@ViewChild('selectorName')`](#variable-template-viewchild-and-elementref)
+4. from HTML element between the component tags to the component using `element reference` , `#selectorName`, `ng-content` and [`@ContentChild('selectorName')`](#element-reference-ng-content-and-contentchild)
 
 ## @Input() decorator
 
@@ -127,17 +128,74 @@ myInput = '';
 
 In order to define a `variable template`, in the component template, you add inside the element a selector, in our case `#inputForm`. \
 In order to call that element inside the `variable-template.component.ts`, you have to use the `@ViewChild()` decorator with argument the selector without the `#` sign, like `@ViewChild('inputForm')`.
-This variable with the `@ViewChild()` decorator can have a very generic type: \
+
+The variable with the `@ViewChild()` decorator can have a very generic type: \
 `@ViewChild('inputForm') myInputRefElement: any;` \
 a generic ElementRef type: \
-`ElementRef<HTMLInputElement>` '\
+`ElementRef<HTMLInputElement>` \
 or a specific ElementRef type for the specific HTML element \
 `ElementRef<HTMLInputElement>`
 
 To get the value of your input you'll use `myInputRefElement.nativeElement.value`.
 
-**Please note** that:
+**Please note:**
 
 - if you define type `ElementRef<HTMLInputElement>`, TypeScript will suggest both `native element` and `value`
 - if you define type `ElementRef`, TypeScript will suggest `native element` but not `value`
 - if you define type `any`, TypeScript will not suggest neither `native element` or `value`
+
+## Element reference, ng-content and @ContentChild()
+
+By default Angular will not consider and show the html between the component tags, e.g. in `main.component.html`
+
+```
+<p>main works!</p>
+<app-slave>
+  <h2>NgContent in main.component.html</h2>
+  <input #inputForm>
+</app-slave>
+```
+
+Angular will ignore the `h1` header and the `input form`.
+
+In order to say to Angular to consider it, you can use a directory called `ng-content` in the component template (`slave.component.html` in this case).
+
+```
+<h1>Slave component</h1>
+<ng-content></ng-content>
+<p>The input value is {{mappedValue}} </p>
+```
+
+Now you have a content between the `app-slave` tags that you want to access.
+
+In this case you can use again the `variable reference` `#inputForm` but, as this element is inside the ng-content and not inside the component view, you cannot use `ViewChild` decorator but you have the `ContentChild`, that works exactly as the `ViewChild`.
+Let's see the `slave.component.ts`
+
+```
+mappedValue = '';
+@ContentChild('inputForm') value!: ElementRef<HTMLInputElement>;
+
+ngAfterContentChecked() {
+  this.mappedValue = this.value.nativeElement.value;
+}
+```
+
+In order to use the `#inputForm` variable, you have to use the `@ContentChild()` decorator with argument the selector without the `#` sign, like `@ContentChild('inputForm')`.
+
+The variable with the `@ContentChild()` decorator can have a very generic type: \
+`@ViewChild('inputForm') myInputRefElement: any;` \
+a generic ElementRef type: \
+`ElementRef<HTMLInputElement>` \
+or a specific ElementRef type for the specific HTML element \
+`ElementRef<HTMLInputElement>`
+
+To get the value of your input you'll use `myInputRefElement.nativeElement.value`.
+
+**Please note:**
+
+- if you define type `ElementRef<HTMLInputElement>`, TypeScript will suggest both `native element` and `value`
+- if you define type `ElementRef`, TypeScript will suggest `native element` but not `value`
+- if you define type `any`, TypeScript will not suggest neither `native element` or `value`
+
+**Please note:**\
+The value coming from the `@ContentChild()` will be visible in the DOM not before the `AfterContentChecked` hook of the component life.

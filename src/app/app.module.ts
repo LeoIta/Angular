@@ -17,6 +17,8 @@ import { MyparentComponent } from './data-among-components/data-child-to-parent/
 import { MyFirstChildComponent } from './data-among-components/data-child-to-parent/my-first-child/my-first-child.component';
 import { MySecondChildComponent } from './data-among-components/data-child-to-parent/my-second-child/my-second-child.component';
 import { VariableTemplateComponent } from './data-among-components/variable-template/variable-template.component';
+import { MainComponent } from './data-among-components/ng-content/main/main.component';
+import { SlaveComponent } from './data-among-components/ng-content/slave/slave.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { VariableTemplateComponent } from './data-among-components/variable-temp
     MyFirstChildComponent,
     MySecondChildComponent,
     VariableTemplateComponent,
+    MainComponent,
+    SlaveComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

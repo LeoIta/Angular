@@ -37,24 +37,22 @@ As soon as the application starts:
 3. Only if any loading happens, the parameters values change, and the `ngOnChanges()` is called
 4. The element can now be initialized with `ngOnInit()`
 5. The `ngDoCheck()` is called to check the component
-6. The `ngAfterContentInit()` as the name said is called after the content of the component has been initialized.
+6. The `ngAfterContentInit()` as the name said is called after the content (`ng-content`) of the component has been initialized and projected to into view.
 7. The `ngAfterContentChecked()` check the component after content is ready.
-8. The `ngAfterViewInit()` as the name said is called after the view of the component has been initialized.
-9. The `ngAfterViewChecked()` check the component after view is ready.
-   <!---->
-   You have now reached the end of the first loop.
+8. The `ngAfterViewInit()` as the name said is called after the view of the component (and `child views`) have been initialized.
+9. The `ngAfterViewChecked()` check the component after view (and `child views`) are ready.
+
+You have now reached the end of the first loop.
 
 ![1st loop](../assets/component-after-1st-loop.jpg "1st loop")
-
-<!---->
 
 Application will run another small loop with:
 
 1. `ngDoCheck()`
 2. `ngAfterContentChecked()`
 3. `ngAfterViewChecked()`
-   <!---->
-   to double check all the previous 9 hooks.
+
+to double check all the previous 9 hooks.
 
 If you press the button named _Angular_, it will delete (destroy) the component so we'll have:
 
@@ -62,5 +60,5 @@ If you press the button named _Angular_, it will delete (destroy) the component 
 2. `ngAfterContentChecked()`
 3. `ngAfterViewChecked()`
 4. `ngOnDestroy()`
-   <!---->
-   They are the three common hooks, plus the `ngOnDestroy()` as the component has been destroyed and does not exists anymore.
+
+They are the three common hooks, plus the `ngOnDestroy()` as the component has been destroyed and does not exist anymore.
