@@ -7,11 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NgStyleComponent {
   alert = true;
+  clock: any;
 
   constructor() {
-    setInterval(() => {
+    this.clock = setInterval(() => {
       this.alert = !this.alert;
     }, 2000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.clock);
   }
 
   getColor() {

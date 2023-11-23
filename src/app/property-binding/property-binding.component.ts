@@ -7,10 +7,15 @@ import { Component } from '@angular/core';
 })
 export class PropertyBindingComponent {
   disabled = true;
+  clock: any;
   constructor() {
-    setInterval(() => {
+    this.clock = setInterval(() => {
       this.disabled = !this.disabled;
     }, 2000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.clock);
   }
   getTextColor() {
     return 'white';

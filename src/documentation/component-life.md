@@ -1,6 +1,6 @@
 # Component life
 
-YOU have created a new component that implement all the hooks of the component life:
+You have created a new component that implement all the hooks of the component life:
 
 ```
 @Component({

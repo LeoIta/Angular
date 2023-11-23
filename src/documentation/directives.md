@@ -5,7 +5,7 @@
 There are two main categories:
 
 1. [`attribute directives`](#attribute-directives) (e.g. `ngClass`, `ngStyle`, `ngModel`) modify the behavior or the appareance of an element, changing e.g. style
-2. `structural directives` (e.g. `*ngIf`, `ng-template`, `*ngFor`, `ngSwitch`, `*ngSwitchCase`) change the DOM adding/removing elements.
+2. [`structural directives`](#structural-directives) (e.g. `*ngIf`, `ng-template`, `*ngFor`, `ngSwitch`, `*ngSwitchCase`) change the DOM adding/removing elements.
 
 ## Attribute directives
 
@@ -65,3 +65,51 @@ The data can be:
 3. a method that return a class name (e.g. `"getClass()"`)
 4. any code that return a class name (e.g. `"alert ? 'alert' : 'default'"`)
 5. an array to return multiple values (e.g. `"[getClass(), timer>9?'bigger':'']"`)
+
+## Structural directives
+
+`Structural directives` change the DOM adding removing elements. Usually their name started with a `*` to indicate that is a structural directive.
+
+<p style="background-color:#f8d7da;color:#721c24;">
+ You can use the build-in directives or you can build your own, but you cannot have two structural directives in the same element.</p>
+
+Here you'll see:
+
+1. [`*ngIf`](#ngif-else-then)
+
+### \*ngIf, else, then
+
+The `*ngIf` is a `structural directive` used to create or destroy an HTML element.
+It can be used alone or with `then` and `else`.
+
+Syntax to add in the HTML element opening tag could be:
+
+1. `*ngIf="condition"` where `condition` can be:
+   - a boolean variable (e.g. `active`)
+   - a boolean method (e.g. `isActive()`)
+   - a boolean result of a statement (e.g. `3>2`)
+
+<p style="background-color:#f8d7da;color:#721c24;">Use of methods in the HTML template with structural, is not recommendated as it will call continously by the component (in the example you can check how many times method is called in the console)</p>
+
+2. `*ngIf="condition; else template1"` where `condition` can be anything as at point 1, and `template1` is the reference name of a `ng-template` element, like in the below example:
+
+```
+<p *ngIf="actived; else option2">Is active</p>
+<ng-template #option2>
+  <p>Is not active</p>
+</ng-template>
+```
+
+3. `*ngIf="condition; then template1 else template2"` where `condition` can be anything as at point 1, `template1` and `template2` are reference names of a `ng-template` elements, like in the below example:
+
+   ```
+   <ng-template *ngIf="actived; then option1 else option2"></ng-template>
+   <ng-template #option1>
+     <p>Is active</p>
+   </ng-template>
+   <ng-template #option2>
+     <p>Is not active</p>
+   </ng-template>
+   ```
+
+in this last example you can notice that the `structural directive` is itself inside an `ng-template` element as both `if` and `else` condition will create or destroy HTML `ng-template`.

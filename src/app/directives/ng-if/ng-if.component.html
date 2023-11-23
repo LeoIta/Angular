@@ -1,0 +1,36 @@
+<h1>ngIf</h1>
+<h3>ngIf with hardcoded condition</h3>
+<p *ngIf="3>2">3>2!</p>
+<p *ngIf="3<2">2>3!</p>
+<hr>
+<h3>ngIf with boolean variables</h3>
+<p *ngIf="active">Active</p>
+<p *ngIf="!active">Not Active</p>
+<hr>
+
+<h3>ngIf with method that return a boolean</h3>
+<p *ngIf="isActive()">Is active</p>
+<p *ngIf="!isActive()">Is not active</p>
+
+<h3>ngIf with boolean variable that store the result of a method</h3>
+<p *ngIf="actived">Is active</p>
+<p *ngIf="!actived">Is not active</p>
+
+<p>if you check the logs, you can see that calling a method in the template should be avoided with structurals, as it is
+  continously called.<br>
+  It is better to save the method result in a variable before using it in the structural directives</p>
+<hr>
+<h3>use of ngIf else, condition with variable from method</h3>
+<p *ngIf="actived; else option2">Is active</p>
+<ng-template #option2>
+  <p>Is not active</p>
+</ng-template>
+<hr>
+<h3>use of ngIf then else, condition with variable from method</h3>
+<ng-template *ngIf="actived; then option1 else option2"></ng-template>
+<ng-template #option1>
+  <p>Is active</p>
+</ng-template>
+<ng-template #option2>
+  <p>Is not active</p>
+</ng-template>

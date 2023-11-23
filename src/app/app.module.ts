@@ -21,6 +21,7 @@ import { MainComponent } from './data-among-components/ng-content/main/main.comp
 import { SlaveComponent } from './data-among-components/ng-content/slave/slave.component';
 import { NgStyleComponent } from './directives/ng-style/ng-style.component';
 import { NgClassComponent } from './directives/ng-class/ng-class.component';
+import { NgIfComponent } from './directives/ng-if/ng-if.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { NgClassComponent } from './directives/ng-class/ng-class.component';
     SlaveComponent,
     NgStyleComponent,
     NgClassComponent,
+    NgIfComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

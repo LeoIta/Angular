@@ -7,11 +7,16 @@ import { Component } from '@angular/core';
 })
 export class NgClassComponent {
   timer = 0;
+  clock: any;
 
   constructor() {
-    setInterval(() => {
+    this.clock = setInterval(() => {
       this.timer++;
     }, 2000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.clock);
   }
 
   getClass() {
