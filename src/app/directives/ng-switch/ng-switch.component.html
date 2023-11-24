@@ -1,0 +1,11 @@
+<h1>[ngSwitch] and *ngSwitch and *ngSwitchDefault</h1>
+<!-- use of ngSwitch basic -->
+<label for="number">Number</label>
+<input #inputNumber type="number" name="number" (input)="onChange()">
+<div [ngSwitch]="number">
+  <p *ngSwitchCase="1">one</p>
+  <p *ngSwitchCase="2">two</p>
+  <p *ngSwitchCase="3">three</p>
+  <p *ngSwitchCase="4">four</p>
+  <p *ngSwitchDefault>Unknown number</p>
+</div>

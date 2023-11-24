@@ -76,6 +76,7 @@ The data can be:
 Here you'll see:
 
 1. [`*ngIf`](#ngif-else-then)
+2. [`ngSwitch` and `*ngSwitchCase`](#ngswitch-and-ngswitchcase)
 
 ### \*ngIf, else, then
 
@@ -113,3 +114,22 @@ Syntax to add in the HTML element opening tag could be:
    ```
 
 in this last example you can notice that the `structural directive` is itself inside an `ng-template` element as both `if` and `else` condition will create or destroy HTML `ng-template`.
+
+### ngSwitch and \*ngSwitchCase
+
+With the `if/else` you can cover only two cases (eg. true/false) , if you need to cover multiple cases, then, instead of using multiple `*ngIf/else` you can use one `ngSwitch` with multiple `*ngSwitchCase`.
+
+The syntax is:
+
+```
+<div [ngSwitch]="number">
+  <p *ngSwitchCase="value1">1</p>
+  ...
+  <p *ngSwitchCase="valueN">N</p>
+  <p *ngSwitchDefault>Unknown number</p>
+</div>
+```
+
+You use `property binding` (e.g. `[ngSwitch]="number"`) to retrieve the `variable` to be checked. \
+Each `*ngSwitchCase` will cover a possible value of the variable under testing. \
+All other possible values, not covered by any `*ngSwitchCase`, can be included under `*ngSwitchDefault`.

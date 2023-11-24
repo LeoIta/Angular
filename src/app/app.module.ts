@@ -22,6 +22,7 @@ import { SlaveComponent } from './data-among-components/ng-content/slave/slave.c
 import { NgStyleComponent } from './directives/ng-style/ng-style.component';
 import { NgClassComponent } from './directives/ng-class/ng-class.component';
 import { NgIfComponent } from './directives/ng-if/ng-if.component';
+import { NgSwitchComponent } from './directives/ng-switch/ng-switch.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { NgIfComponent } from './directives/ng-if/ng-if.component';
     NgStyleComponent,
     NgClassComponent,
     NgIfComponent,
+    NgSwitchComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
