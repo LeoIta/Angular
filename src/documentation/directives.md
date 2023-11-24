@@ -77,6 +77,7 @@ Here you'll see:
 
 1. [`*ngIf`](#ngif-else-then)
 2. [`ngSwitch` and `*ngSwitchCase`](#ngswitch-and-ngswitchcase)
+3. [`*ngFor`](#ngfor)
 
 ### \*ngIf, else, then
 
@@ -133,3 +134,37 @@ The syntax is:
 You use `property binding` (e.g. `[ngSwitch]="number"`) to retrieve the `variable` to be checked. \
 Each `*ngSwitchCase` will cover a possible value of the variable under testing. \
 All other possible values, not covered by any `*ngSwitchCase`, can be included under `*ngSwitchDefault`.
+
+### \*ngFor
+
+The directive `*ngFor` allows you repeat a template for each element of an array with just few line of code.
+
+If in the `ts` file you define an array:
+`numbers = [1, 2, 3, 4, 5, 6, 7]`
+
+You can display all the elements of `numbers`, just using:
+
+```
+<p *ngFor="let number of numbers">
+  {{number}}
+</p>
+```
+
+You can do the same also with any type of array.
+
+The \*ngFor give you also possibility to extract other info from the loop:
+
+```
+*ngFor="let letter of letters; index as i, count as total, first as firstL, last as lastL, even as isEven, odd as isOdd"
+```
+
+The possible parameters are:
+
+1. `index` is a number indicating the index of the element
+2. `count` is an number indicating the size of the array
+3. `first` is a boolean indicating if the element is the first in the array
+4. `last` is a boolean indicating if the element is the last in the array
+5. `even` is a boolean indicating if the index is even
+6. `odd` is a boolean indicating if the index is odd
+
+You can add alias for any of the above 5, using the key word `as`(e.g. `count as total`).

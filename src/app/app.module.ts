@@ -23,6 +23,7 @@ import { NgStyleComponent } from './directives/ng-style/ng-style.component';
 import { NgClassComponent } from './directives/ng-class/ng-class.component';
 import { NgIfComponent } from './directives/ng-if/ng-if.component';
 import { NgSwitchComponent } from './directives/ng-switch/ng-switch.component';
+import { NgForComponent } from './directives/ng-for/ng-for.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { NgSwitchComponent } from './directives/ng-switch/ng-switch.component';
     NgClassComponent,
     NgIfComponent,
     NgSwitchComponent,
+    NgForComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

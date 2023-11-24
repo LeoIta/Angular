@@ -1,0 +1,13 @@
+<h1>ngFor</h1>
+<p *ngFor="let number of numbers">
+  {{number}}
+</p>
+
+<p
+  *ngFor="let letter of letters; index as i, count as total, first as firstL, last as lastL, even as isEven, odd as isOdd">
+  {{letter}} is the element {{i+1}}/{{total}} <br>
+  {{letter}} is <span *ngIf="!firstL">not</span> the first element<br>
+  {{letter}} is <span *ngIf="!lastL">not</span> the last element<br>
+  {{i}} is even: {{isEven}} <br>
+  {{i}} is odd: {{isOdd}}
+</p>
