@@ -31,6 +31,8 @@ import { AdvanceAttributeComponent } from './directives/custom-attribute-directi
 import { DynamicHighlightDirective } from './directives/custom-attribute-directive/dynamic-highlight.directive';
 import { RendererAttributeComponent } from './directives/custom-attribute-directive/renderer-attribute/renderer-attribute.component';
 import { AdvancedHighlightDirective } from './directives/custom-attribute-directive/advanced-highlight.directive';
+import { UnlessDirective } from './directives/custom-structure-directive/unless.directive';
+import { StructureDirectiveComponent } from './directives/custom-structure-directive/structure-directive.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { AdvancedHighlightDirective } from './directives/custom-attribute-direct
     SimpleAttributeComponent,
     AdvanceAttributeComponent,
     RendererAttributeComponent,
+    UnlessDirective,
+    StructureDirectiveComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

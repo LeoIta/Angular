@@ -199,7 +199,7 @@ export class HighlightDirective{
 
 To indicate that the class is a `directive`, you should add the decorator `@Directive()` taht accept as argument the `selector` that must be a string. Standard for it is a name, between square brackets, that start with app and then the name of the directive. (e.g. `'[appHighlight]'`).
 
-To apply the directive to an HTML element, it is enough to write the selector in the opening tag of the HTML element"
+To apply the directive to an HTML element, it is enough to write the selector in the opening tag of the HTML element:
 
 ```
 <p appHighlight>Content to be highlighted</p>
@@ -208,7 +208,7 @@ To apply the directive to an HTML element, it is enough to write the selector in
 Let's see how to write:
 
 1. [custom attribute directive](#create-a-custom-attribute-directive)
-2. custom structure directive
+2. [custom structure directive](#create-a-custom-strucutre-directive)
 
 ### Create a custom attribute directive
 
@@ -276,3 +276,61 @@ Adding `HostBinding()` decorator to a variable, you can read and edit the proper
 ```
 
 where `color` can be a string or a variable, maybe obtained by using `@Input()`.
+
+### Create a custom structure directive
+
+Before creating a new one, let's see what happens behind the scene, when you use `structural directive` starting with `*`.
+Let's see one simple `*ngIf` block and what actually Angular use:
+
+```
+<div *ngIf="number>=0">
+You have a positive number
+</div>
+```
+
+```
+<ng-template [ngIf]="number>=0">
+You have a positive number
+</ng-template>
+```
+
+As you can see, the `*` indicate that you'll have a property binding that will render a template (`ng-template`).
+
+Based on the above analysis you can create a custom `structural directive` similar to `*ngIf`.
+
+You need to have a constructor with two arguments:
+
+1. `templateRef: TemplateRef<any>` indicates `WHAT` to show/hide
+2. `viewContainerRef: ViewContainerRef` indicates `WHERE` to show/hide the template
+
+You need to use the `@Input()`, followed by the key word `set` so update te value everytime the binding value changes. `appUnless` will be a method that accept a boolean `condition` as argument.
+
+```
+@Input() set appUnless(condition: boolean) {
+   if (!condition) {
+     this.viewContainerRef.createEmbeddedView(this.templateRef);
+   } else {
+     this.viewContainerRef.clear();
+   }
+ }
+```
+
+To initialize an templateRef element in the DOM you'll use:
+
+```
+viewContainerRef.createEmbeddedView(this.templateRef)
+```
+
+To destroy the element you'll use:
+
+```
+viewContainerRef.clear()
+```
+
+**Please note** that the name after the `@Input()` decorator MUST match the `directive's selector`
+
+To apply this directive to an HTML element, it is enough to write the selector name preceded by `*` in the opening tag of the HTML element:
+
+```
+<li *appUnless="number%2==1">
+```
