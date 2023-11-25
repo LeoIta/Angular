@@ -4,8 +4,13 @@
 
 There are two main categories:
 
-1. [`attribute directives`](#attribute-directives) (e.g. `ngClass`, `ngStyle`, `ngModel`) modify the behavior or the appareance of an element, changing e.g. style
-2. [`structural directives`](#structural-directives) (e.g. `*ngIf`, `ng-template`, `*ngFor`, `ngSwitch`, `*ngSwitchCase`) change the DOM adding/removing elements.
+1. [`attribute directives`](#attribute-directives) (e.g. the build-in are `ngClass`, `ngStyle`, `ngModel`) modify the behavior or the appareance of an element, changing e.g. style
+2. [`structural directives`](#structural-directives) (e.g. the build-in are `*ngIf`, `ng-template`, `*ngFor`, `ngSwitch`, `*ngSwitchCase`) change the DOM adding/removing elements.
+
+You'll see later how you can create custom directives:
+
+1. [How to create a custom attribute directive](#how-to-create-a-custom-attribute-directive)
+2. [How to create a custom structural directive](#how-to-create-a-custom-structural-directive)
 
 ## Attribute directives
 
@@ -168,3 +173,106 @@ The possible parameters are:
 6. `odd` is a boolean indicating if the index is odd
 
 You can add alias for any of the above 5, using the key word `as`(e.g. `count as total`).
+
+## Create directives
+
+New `directive` can be generated automatically or manually. To create automatically a directive called `highlight`, you can run `ng generate directive highlight` or the short command `ng g c highlight`
+The command:
+
+1. generates a file called `highlight.directive.ts` (containing the logic)
+2. generates a file called `highlight.directive.spec.ts` (file to test the ts logic)
+3. updates `app.module.ts`, adding in declaration the new directive class
+   `declarations: [AppComponent, HighlightDirective],` in order to be able to use it
+
+If you are still not interested in testing, you can skip the creation of the `.spec.ts` file, adding `--skip-tests true` at the end of you command line:
+`ng g c highlight --skip-tests true`
+
+If you want to create manually a directive called `highlight`, you should create a file and naming it following the standard `highlight.directive.ts`, and it should have the basic content:
+
+```
+@Directive({
+  selector: '[appHighlight]',
+})
+export class HighlightDirective{
+}
+```
+
+To indicate that the class is a `directive`, you should add the decorator `@Directive()` taht accept as argument the `selector` that must be a string. Standard for it is a name, between square brackets, that start with app and then the name of the directive. (e.g. `'[appHighlight]'`).
+
+To apply the directive to an HTML element, it is enough to write the selector in the opening tag of the HTML element"
+
+```
+<p appHighlight>Content to be highlighted</p>
+```
+
+Let's see how to write:
+
+1. [custom attribute directive](#create-a-custom-attribute-directive)
+2. custom structure directive
+
+### Create a custom attribute directive
+
+In order to act as an attribute directive, your directive should be able to read/write the properties of the element it is applied to.
+There are three ways:
+
+1. using [`ElementRef`](#elementref)
+2. using [`ElementRef` and `Renderer2`](#elementref-and-renderer2)
+3. using [`@HostBinding()`](#hostbinding)
+
+In order to `capture the events` of the HTML element, you can apply the `@HostListener()` decorator to a method, and put as argument the string name of the Angular event (e.g. `@HostListener('mouseenter')`).
+
+#### ElementRef
+
+Using `ElementRef` you have to define a variable in the constructor:
+
+```
+constructor(private element : ElementRef){
+
+}
+```
+
+The `element` is the variable used to create a connection with the HTML element to which you want to apply the directive.
+
+To edit properties of the element you can use `element.nativeElement` followed by the property you wnat to access, e.g. to change style and background-color you have to write:
+
+```
+this.element.nativeElement.style.backgroundColor = color;
+```
+
+where `color` can be a string or a variable, maybe obtained by using `@Input()`.
+
+#### ElementRef and Renderer2
+
+You can access the element with `ElementRef` and edit its properties with `Renderer2`.
+
+In this case the contructor will have two arguments:
+
+```
+constructor(private element : ElementRef,, private renderer: Renderer2){
+
+}
+```
+
+To edit properties of the element here you use `element.nativeElement` followed by the property you wnat to access, e.g. to change style and background-color you have to write:
+
+```
+this.renderer.setStyle(
+      this.element.nativeElement,
+      'background-color',
+      color
+    );
+```
+
+where `color` can be a string or a variable, maybe obtained by using `@Input()`.
+
+You can read more about use of `Renderer2` in [Angular doc](https://angular.io/api/core/Renderer2)
+
+#### HostBinding
+
+Adding `HostBinding()` decorator to a variable, you can read and edit the properties of the HTML element without having a custom constructor. The argument of `HostBinding()` is the DOM property we want to change, e.g. `'style.backgroundColor'`, and the property's value will be the value assigned to that property.
+
+```
+  @HostBinding('style.backgroundColor') bgColor: string = color;
+```
+
+where `color` can be a string or a variable, maybe obtained by using `@Input()`.

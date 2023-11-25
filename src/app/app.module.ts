@@ -24,6 +24,13 @@ import { NgClassComponent } from './directives/ng-class/ng-class.component';
 import { NgIfComponent } from './directives/ng-if/ng-if.component';
 import { NgSwitchComponent } from './directives/ng-switch/ng-switch.component';
 import { NgForComponent } from './directives/ng-for/ng-for.component';
+import { HighlightDirective } from './directives/custom-attribute-directive/highlight.directive';
+import { AttributeDirectiveComponent } from './directives/custom-attribute-directive/attribute-directive.component';
+import { SimpleAttributeComponent } from './directives/custom-attribute-directive/simple-attribute/simple-attribute.component';
+import { AdvanceAttributeComponent } from './directives/custom-attribute-directive/advance-attribute/advance-attribute.component';
+import { DynamicHighlightDirective } from './directives/custom-attribute-directive/dynamic-highlight.directive';
+import { RendererAttributeComponent } from './directives/custom-attribute-directive/renderer-attribute/renderer-attribute.component';
+import { AdvancedHighlightDirective } from './directives/custom-attribute-directive/advanced-highlight.directive';
 
 @NgModule({
   declarations: [
@@ -48,6 +55,13 @@ import { NgForComponent } from './directives/ng-for/ng-for.component';
     NgIfComponent,
     NgSwitchComponent,
     NgForComponent,
+    HighlightDirective,
+    DynamicHighlightDirective,
+    AdvancedHighlightDirective,
+    AttributeDirectiveComponent,
+    SimpleAttributeComponent,
+    AdvanceAttributeComponent,
+    RendererAttributeComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

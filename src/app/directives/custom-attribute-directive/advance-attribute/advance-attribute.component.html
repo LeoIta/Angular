@@ -1,0 +1,22 @@
+<h2>advance-attribute-directive</h2>
+<div class="flex-container">
+  <div class="flex-child">
+    <p>Select the highlight color when mouse is over:</p>
+    <label for="pink">pink<input type="radio" name="mouse-over-color" id="pink"
+        (click)="updateOverColor('pink')"></label><br>
+    <label for="whitesmoke">whitesmoke<input type="radio" name="mouse-over-color" id="whitesmoke"
+        (click)="updateOverColor('whitesmoke')"></label><br>
+    <label for="salmon">salmon<input type="radio" name="mouse-over-color" id="salmon"
+        (click)="updateOverColor('salmon')"></label><br>
+  </div>
+  <div class="flex-child">
+    <p>Select the highlight color when mouse is away:</p>
+    <label for="yellow">yellow<input type="radio" name="mouse-away-color" id="yellow"
+        (click)="updateAwayColor('yellow')"></label><br>
+    <label for="lightblue">lightblue<input type="radio" name="mouse-away-color" id="lightblue"
+        (click)="updateAwayColor('lightblue')"></label><br>
+    <label for="lightgreen">lightgreen<input type="radio" name="mouse-away-color" id="lightgreen"
+        (click)="updateAwayColor('lightgreen')"></label><br>
+  </div>
+</div>
+<p appAdvancedHighlight [overColor]="inColor" [awayColor]="outColor">Content to be highlighted</p>

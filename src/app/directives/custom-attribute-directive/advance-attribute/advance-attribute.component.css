@@ -1,0 +1,11 @@
+.flex-container {
+  display: flex;
+  max-width: 60vw;
+}
+.flex-child {
+  border: 1px black solid;
+  margin: 0px 10px;
+  border-radius: 5px;
+  font-size: small;
+  padding: 10px;
+}
