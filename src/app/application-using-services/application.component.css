@@ -1,0 +1,11 @@
+.flex-container {
+  display: flex;
+  justify-content: space-around;
+  max-width: 25vw;
+}
+
+.flex-max {
+  display: flex;
+  justify-content: space-around;
+  max-width: 75vw;
+}

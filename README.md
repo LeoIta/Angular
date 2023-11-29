@@ -92,3 +92,20 @@ There are two main categories:
 You can use the build-in directives or you can build your own.
 
 More details can be found in [directives.md](./src/documentation/directives.md)
+
+## Services
+
+New `service` can be generated automatically or manually.
+To create automatically a service called `global`, run:
+`ng generate service global`
+or the short command
+`ng g s global`
+It will generate 2 files in the current folder:
+
+1. `global.service.ts` (containing the logic)
+2. `global.service.spec.ts` (file to test the ts logic)
+
+If you are still not interested in testing, you can skip the creation of the `spec.ts` file, adding `--skip-tests true` at the end of you command line:
+`ng g c global --skip-tests true`
+
+More details can be found in [services.md](./src/documentation/services.md)

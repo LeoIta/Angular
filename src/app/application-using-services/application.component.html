@@ -1,0 +1,22 @@
+<h1>Parent App</h1>
+<label for="name">Name <input type="text" id="name" #globalInput (input)="update()"></label>
+<button (click)="addAnimals(text)">Add animals</button>
+<button (click)="addPeople(text)">Add people</button>
+<button (click)="addColors(text)">Add colors</button>
+<div class="flex-container">
+  <div>
+    <p *ngFor="let animal of animals">{{animal}}</p>
+  </div>
+  <div>
+    <p *ngFor="let person of people">{{person}}</p>
+  </div>
+  <div>
+    <p *ngFor="let color of colors">{{color}}</p>
+  </div>
+</div>
+<hr>
+<div class="flex-max">
+  <app-sub-app-a></app-sub-app-a>
+  <app-sub-app-b></app-sub-app-b>
+</div>
+<hr>

@@ -1,0 +1,12 @@
+<h1>Child App A</h1>
+<label for="name">Name <input type="text" id="name" #subAInput (input)="update()"></label>
+<button (click)="addAnimals(text)">Add animals</button>
+<button (click)="addPeople(text)">Add people</button>
+<div class="flex-container">
+  <div>
+    <p *ngFor="let animal of animals">{{animal}}</p>
+  </div>
+  <div>
+    <p *ngFor="let person of people">{{person}}</p>
+  </div>
+</div>

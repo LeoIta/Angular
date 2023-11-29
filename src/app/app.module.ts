@@ -33,6 +33,10 @@ import { RendererAttributeComponent } from './directives/custom-attribute-direct
 import { AdvancedHighlightDirective } from './directives/custom-attribute-directive/advanced-highlight.directive';
 import { UnlessDirective } from './directives/custom-structure-directive/unless.directive';
 import { StructureDirectiveComponent } from './directives/custom-structure-directive/structure-directive.component';
+import { ApplicationComponent } from './application-using-services/application.component';
+import { SubAppAComponent } from './application-using-services/sub-app-a/sub-app-a.component';
+import { SubAppBComponent } from './application-using-services/sub-app-b/sub-app-b.component';
+import { MainService } from './application-using-services/main.service';
 
 @NgModule({
   declarations: [
@@ -66,9 +70,12 @@ import { StructureDirectiveComponent } from './directives/custom-structure-direc
     RendererAttributeComponent,
     UnlessDirective,
     StructureDirectiveComponent,
+    ApplicationComponent,
+    SubAppAComponent,
+    SubAppBComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
-  providers: [],
+  providers: [MainService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
