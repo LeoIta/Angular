@@ -20,6 +20,8 @@ Index:
 3. [Components](#components)
 4. [Data binding](#databinding)
 5. [Directives](#directives)
+6. [Services](#services)
+7. [Routing](#routing)
 
 ## Run the application
 
@@ -109,3 +111,17 @@ If you are still not interested in testing, you can skip the creation of the `sp
 `ng g c global --skip-tests true`
 
 More details can be found in [services.md](./src/documentation/services.md)
+
+## Routing
+
+In the old application, you need to have several HTML template files, one for each page you display, and every time you change pages, you have to load the new one.
+
+Angular allows to create web applications that use data and can change over time without reloading the page. It primarily aims to provide speed, simplicity, and scalability.
+
+Instead of different HTML templates, Angular uses different views, the above mentioned [`component`](#components), that are included in the `root component` inside the `index.html`. In this way you load only once only one file (`index.html`) and you manage the views using `directives` and `services`.
+
+As users perform application tasks, they need to move between the different views that you have defined. To handle the navigation from one view to the next, you use the `Angular Router`. \
+The Router enables navigation by interpreting a browser URL as an instruction to change the view.
+The `routing` create a virtual URL, so users can change page and URL without reloading the page, as they are always on the same page, but different views are displayed.
+
+More details can be found in [routing.md](./src/documentation/routing.md) or on Angular documentation about [routing](https://angular.io/guide/routing-overview)

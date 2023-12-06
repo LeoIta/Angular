@@ -1,4 +1,4 @@
-<div *ngIf="bool">
+<div *ngIf="false">
   <app-life-cycle (boolEvent)="updateBool($event)" [name]="label"></app-life-cycle>
   <app-servers></app-servers>
   <app-string-interpolation></app-string-interpolation>
@@ -16,7 +16,8 @@
   <app-ng-for></app-ng-for>
   <app-attribute-directive></app-attribute-directive>
   <app-structure-directive></app-structure-directive>
-</div>
-<div *ngIf="!bool">
   <app-application></app-application>
 </div>
+<div *ngIf="!bool">
+</div>
+<app-basic-routing></app-basic-routing>
