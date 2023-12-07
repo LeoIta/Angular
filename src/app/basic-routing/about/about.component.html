@@ -1,1 +1,9 @@
 <p>About us page</p>
+<button (click)="goHome()">Go back to home page</button>
+<button (click)="goToContacts()">Go to contacts</button>
+<button (click)="reload()">Reload</button>
+<button (click)="wrongReload()">Wrong Reload</button>
+
+<a routerLink="/about" routerLinkActive="selected" style="padding: 10px;">Correct about us</a>
+<a routerLink="about" routerLinkActive="selected" style="padding: 10px;">Wrong about us 1</a>
+<a routerLink="./about" routerLinkActive="selected" style="padding: 10px;">Wrong about us 2</a>

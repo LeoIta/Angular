@@ -269,7 +269,7 @@ You can read more about use of `Renderer2` in [Angular doc](https://angular.io/a
 
 #### HostBinding
 
-Adding `HostBinding()` decorator to a variable, you can read and edit the properties of the HTML element without having a custom constructor. The argument of `HostBinding()` is the DOM property we want to change, e.g. `'style.backgroundColor'`, and the property's value will be the value assigned to that property.
+Adding `HostBinding()` decorator to a variable, you can read and edit the properties of the HTML element without having a custom constructor. The argument of `HostBinding()` is the DOM property you want to change, e.g. `'style.backgroundColor'`, and the property's value will be the value assigned to that property.
 
 ```
   @HostBinding('style.backgroundColor') bgColor: string = color;

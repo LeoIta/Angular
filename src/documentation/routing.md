@@ -53,7 +53,7 @@ If you define the routing directly in the `app.module.ts`, without having a dedi
 
 ## How to set basic routing
 
-In order to set basic routing for some views, we need to add as argument of `const routes: Routes = [];` one object, for each routing, with parameters:
+In order to set basic routing for some views, you need to add as argument of `const routes: Routes = [];` one object, for each routing, with parameters:
 
 - `path` to define the URL to be display conntected with the component define in the next property
 - `component` to define which view (component) to display for that particular URL (`path`)
@@ -70,20 +70,20 @@ To _activate the routing_ inside the component, you need to add the special elem
 
 **Please note** that the path for `http://localhost:4200/about` is `'about'` and not `'/about'` or `'\about'` or the app will not display any view.
 
-Now changing URL manually, we can see that:
+Now changing URL manually, you can see that:
 
 - `http://localhost:4200` or `http://localhost:4200/` will show only `HomeComponent`
 - `http://localhost:4200/about`will show only `AboutComponent`
 - `http://localhost:4200/contacts`will show only `ContactsComponent`
 
-The problem is that every time we change manually the URL, the page is reloaded, but it is not the aim of using routing. Let's see how to redirect to a new view (new virtual page) without reloading the page.
+The problem is that every time you change manually the URL, the page is reloaded, but it is not the aim of using routing. Let's see how to redirect to a new view (new virtual page) without reloading the page.
 
 ## How to redirect to a new view (new virtual page)
 
 To redirect to another view you can use:
 
 1. [links](#redirect-to-a-new-view-using-links) => you have to replace `href` with `routerLink`, as href will redirect to the requested view, but it will reload the page, that is not what you want to achieve with routing
-2. methods => called in buttons, after click event, will use the `Router`.
+2. [methods](#redirect-to-a-new-view-using-methods) => called in buttons, after click event, will use the `Router`.
 
 ### Redirect to a new view using links
 
@@ -111,7 +111,7 @@ from `http://localhost:4200/about`, or any other path, using:
 
 - `relative path` like e.g `'contacts'` or `'./contacts'` you'll be redirected to `http://localhost:4200/about/contacts`
 - `absolute path` like e.g. `'/contacts'` you'll be redirected to `http://localhost:4200/contacts`
-  In this case there is a lot of difference, as we have:
+  In this case there is a lot of difference, as you have:
 - `relative path` append the path to the current path `'http://localhost:4200/about'` + `'/contacts'` => `http://localhost:4200/about/contacts`
 - `absolute path` append the path to the root path `'http://localhost:4200'` + `'/contacts'` => `http://localhost:4200/contacts`
 
@@ -129,3 +129,28 @@ By default root path will be always included as part of any path, to specify tha
 Home
 </a>
 ```
+
+### Redirect to a new view using methods
+
+Let's take as example a button inside `about` component that will redirect to `contacts`view. Steps to obtain it are:
+
+1. add a button in the about template that on click event calls a method (e.g. goToContacts())
+2. inject in the constructor the `router: Router`
+3. use in the method the `navigate` method that accept as argument an Array of paths:
+
+   ```
+   goToContacts() {
+       this.router.navigate([path]);
+     }
+   ```
+
+In this case, both relative or absolute paths, will append the path(s) to the root path (`http://localhost:4200`) as the component does not know in which path the component is when the method is called.
+
+In order to inform the component on the current path, you have to add an object as second argument of the navigate method. The object has only one property, called `relativeTo` with value of the property `route`, injected in the constructor, of type `ActivatedRoute` like below:
+
+```
+constructor(private router: Router, private route: ActivatedRoute) {}
+this.router.navigate(['about'], { relativeTo: this.route });
+```
+
+If this method is inside the `AboutComponent`, with path `http://localhost:4200/about`, Angular will append the relative path `'about'` to the `relativeTo path` that will be set to `http://localhost:4200/about`, then the full link will be `http://localhost:4200/about/about`.

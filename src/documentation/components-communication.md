@@ -126,7 +126,7 @@ myInput = '';
   }
 ```
 
-In order to define a `variable template`, in the component template, you add inside the element a selector, in our case `#inputForm`. \
+In order to define a `variable template`, in the component template, you add inside the element a selector, in this case `#inputForm`. \
 In order to call that element inside the `variable-template.component.ts`, you have to use the `@ViewChild()` decorator with argument the selector without the `#` sign, like `@ViewChild('inputForm')`.
 
 The variable with the `@ViewChild()` decorator can have a very generic type: \
