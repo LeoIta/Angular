@@ -77,3 +77,55 @@ Now changing URL manually, we can see that:
 - `http://localhost:4200/contacts`will show only `ContactsComponent`
 
 The problem is that every time we change manually the URL, the page is reloaded, but it is not the aim of using routing. Let's see how to redirect to a new view (new virtual page) without reloading the page.
+
+## How to redirect to a new view (new virtual page)
+
+To redirect to another view you can use:
+
+1. [links](#redirect-to-a-new-view-using-links) => you have to replace `href` with `routerLink`, as href will redirect to the requested view, but it will reload the page, that is not what you want to achieve with routing
+2. methods => called in buttons, after click event, will use the `Router`.
+
+### Redirect to a new view using links
+
+Let's assume you are running app locally on port 4200, the host is localhost:4200
+Redirect to a new view using links can be done using the Angular directive `routerLink`.
+
+1. `routingLink="path"`
+2. `[routingLink]="path"` or `[routingLink]="[path]"`
+3. `[routingLink]="[path1,path2,..]"`
+
+where the `path` can be:
+
+- `relative path` (e.g. `'contacts'`,`'./contacts'`, `'../contacts'`,`'../../contacts'`) **appends new path** to your current path, so it returns different results based on the view that contain this rouingLinks
+- `absolute path` (e.g. `'/contacts'`)
+
+To understand the difference let's see some examples:
+
+from `http://localhost:4200`, the root path or home page, using:
+
+- `relative path` like e.g `'contacts'` or `'./contacts'` you'll be redirected to `http://localhost:4200/contacts`
+- `absolute path` like e.g. `'/contacts'` you'll be redirected to `http://localhost:4200/contacts`
+  There is no difference because absolute path is like relative path to the root path `http://localhost:4200`
+
+from `http://localhost:4200/about`, or any other path, using:
+
+- `relative path` like e.g `'contacts'` or `'./contacts'` you'll be redirected to `http://localhost:4200/about/contacts`
+- `absolute path` like e.g. `'/contacts'` you'll be redirected to `http://localhost:4200/contacts`
+  In this case there is a lot of difference, as we have:
+- `relative path` append the path to the current path `'http://localhost:4200/about'` + `'/contacts'` => `http://localhost:4200/about/contacts`
+- `absolute path` append the path to the root path `'http://localhost:4200'` + `'/contacts'` => `http://localhost:4200/contacts`
+
+## Append class using RouterLinkActive and RouterLinkActiveOptions
+
+Angular provides a directive to style the `active router link` using the directive `routerLinkActive`that will append a class if the link is part of the active path. (e.g. `routerLinkActive="myClass"`).
+
+By default root path will be always included as part of any path, to specify that you want to consider only the `full match` instead of the `contains match`, you should use another directive called `routerLinkActiveOptions`, as property binding with an object as data
+
+```
+<a routerLink="/"
+  routerLinkActive="selected"
+  [routerLinkActiveOptions]="{exact:true}"
+  style="padding: 10px;">
+Home
+</a>
+```

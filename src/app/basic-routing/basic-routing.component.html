@@ -1,1 +1,14 @@
+<div class="flex-container">
+  <!-- href will reload the page, it should not be used when using routing -->
+  <!-- <a href="/" style="padding: 10px;">Home</a>
+  <a href="/about" style="padding: 10px;">About us</a>
+  <a href="/contacts" style="padding: 10px;">Contacts</a> -->
+
+  <!-- to redirect to another view using routing without any page reload, you use routerLink instead of href-->
+  <a routerLink="/" routerLinkActive="selected" [routerLinkActiveOptions]="{exact:true}" style="padding: 10px;">Home</a>
+  <a routerLink="/about" routerLinkActive="selected" style="padding: 10px;">About us</a>
+  <a routerLink="/contacts" routerLinkActive="selected" [routerLinkActiveOptions]="{exact:true}"
+    style="padding: 10px;">Contacts</a>
+
+</div>
 <router-outlet></router-outlet>
