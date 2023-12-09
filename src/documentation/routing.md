@@ -55,7 +55,7 @@ This `routes` will be use:
 
 1. [to display components in basic views](#how-to-set-basic-routing) (e.g. `http://localhost:4200/contacts`)
 2. [to map routing of components using parameters](#how-to-redirect-to-a-new-view-with-parameters-and-how-to-retrieve-them) (e.g. `http://localhost:4200/about/Paris/France`)
-3. to map routing of components using query parameters and fragments (e.g. `http://localhost:4200/about?allowEdit=1#loading`)
+3. [to map routing of components using query parameters and fragments](#how-to-redirect-to-a-new-view-with-query-parameters-and-fragments) (e.g. `http://localhost:4200/about?allowEdit=1#loading`)
 4. to display child (nested) components in the views (e.g. `http://localhost:4200/about`)
 5. to map redirection (e.g. when `http://localhost:4200/xxxxx` then redirect to the homepage)
 6. to guard the navigate into the view (e.g. you can access `http://localhost:4200/about` only if you have some rights)
@@ -147,7 +147,7 @@ Let's take as example a button inside `about` component that will redirect to `c
 
 1. add a button in the about template that on click event calls a method (e.g. goToContacts())
 2. inject in the constructor the `router: Router`
-3. use in the method the `navigate` method of `router: Router` that accept as argument an Array of paths:
+3. use in the method the `navigate` method of the `router: Router` that accept as argument an Array of paths:
 
    ```
    goToContacts() {
@@ -199,7 +199,7 @@ this.route.params
 
 This will update the value of city when it changes in the path.
 
-To navigate to e.g. `http://localhost:4200/about/Paris/France`, you use the `navigate` method of `router: Router` in the ts file:
+To navigate to e.g. `http://localhost:4200/about/Paris/France`, you use the `navigate` method of the `router: Router` in the ts file:
 
 ```
 this.router.navigate(['about', 'Paris', 'France'])
@@ -210,3 +210,76 @@ or the routeLink in the HTML template:
 ```
 [routerLink] = ['about', 'Paris', 'France']
 ```
+
+## How to redirect to a new view with query parameters and fragments
+
+You could want to map a component or part of it to a path that contains also `query parameters` and `fragments`, like:
+
+```
+ http://localhost:4200/about?logged=true&role=admin#user
+```
+
+Angular will understand:
+
+- `queryParameters` = { logged: false, role: 'admin' }
+- `fragment` = 'user'
+
+You can retrieve these properties in two main ways using the `route:ActivatedRoute`:
+
+1. `static`, needed if you do not change them from the same view
+2. `dinamic`, if you plan to change them from the same view
+
+To retrieve in the static way, e.g. the query parameters `logged` and `role`, you have to use the `snapshot` follow by the `queryParams`, that contains all the `query parameters` of the current path:
+
+```
+this.logged = this.route.snapshot.queryParams['logged']
+this.role = this.route.snapshot.queryParams['role']
+```
+
+To retrieve in the static way, the value of the `fragment`, that must be unique, you have to use the `snapshot` follow by the `fragment`, that contains the value of the `fragment` of the current path:
+
+```
+this.userType = this.route.snapshot.fragment
+```
+
+To retrieve in the dinamic way, e.g. the query parameters `logged` and `role`, you have to use directly the `queryParams`, that contains all the parameters of the current path, and subscribe it:
+
+```
+this.route.queryParams
+  .subscribe((queryParams:Params) =>
+  this.logged = param['logged'];
+  this.role = param['role'];
+  )
+```
+
+To retrieve in the dinamic way, the value of the `fragment`, you have to use directly the `fragment`, that contains the value of the `fragment` of the current path, and subscribe it:
+
+```
+this.route.queryParams
+  .subscribe((fragment:any) =>
+  this.userType = fragment;
+  )
+```
+
+This will update the value of `logged`, `role` and `userType` when they change in the path.
+
+To navigate to e.g. `http://localhost:4200/about?logged=true&role=admin#user`, you use:
+
+- in the ts file, the `navigate` method of the `router:Router` and as arguments you add:
+
+  1. path (e.g. `['/about']`)
+  2. object that contains `queryParams` (e.g. `queryParams: { logged: false, role: 'admin' }`) and `fragment` (e.g. `fragment: 'user'`)
+
+  ```
+  this.router.navigate(['/about'], {
+        queryParams: { logged: false, role: 'admin' },
+        fragment: 'user',
+      });
+  ```
+
+- in the HTML template, the `routerLink` with `queryParams` and `fragment`:
+  ```
+  [routerLink]="['/about']"
+  [queryParams]="{'logged':true, 'role':'admin'}"
+  fragment="user"
+  ```

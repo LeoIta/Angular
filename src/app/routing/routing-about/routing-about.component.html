@@ -1,3 +1,15 @@
 <p>About us</p>
 <p>City: {{city}}</p>
 <p>Country: {{country}}</p>
+
+<p>This user has permission: {{hasPermissions}}</p>
+
+<a [routerLink]="['/about']" [queryParams]="{'logged':true, 'role':'admin'}" fragment="user">
+  <button>
+    login as admin user
+  </button>
+</a>
+
+<button style="text-align: left;" (click)="onLogOut()">
+  logout the admin user
+</button>
