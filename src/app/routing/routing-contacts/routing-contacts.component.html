@@ -1,0 +1,39 @@
+<div class="content" *ngIf="id<0">
+  <h3>Contacts list</h3>
+  <table>
+    <thead>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Details</th>
+    </thead>
+    <tbody *ngFor="let contact of contacts; index as i">
+      <tr>
+        <td>{{contact.firstname}}</td>
+        <td>{{contact.lastname}}</td>
+        <td><a routerLink="{{i}}">open details</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="content" *ngIf="id>=0">
+  <table>
+    <tr>
+      <th>Firstname</th>
+      <td>{{contact.firstname}}</td>
+    </tr>
+    <tr>
+      <th>Lastname</th>
+      <td>{{contact.lastname}}</td>
+    </tr>
+    <tr>
+      <th>Age</th>
+      <td>{{contact.age}}</td>
+    </tr>
+    <tr>
+      <th>Confirmed</th>
+      <td>{{contact.confirmed}}</td>
+    </tr>
+  </table>
+  <button (click)="toPrevious()">previous</button>
+  <button (click)="toNext()">next</button>
+</div>

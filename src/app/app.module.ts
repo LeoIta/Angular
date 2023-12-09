@@ -39,9 +39,12 @@ import { SubAppBComponent } from './application-using-services/sub-app-b/sub-app
 import { MainService } from './application-using-services/main.service';
 import { HomeComponent } from './basic-routing/home/home.component';
 import { AboutComponent } from './basic-routing/about/about.component';
-import { ContactComponent } from './basic-routing/contact/contact.component';
 import { ContactsComponent } from './basic-routing/contacts/contacts.component';
 import { BasicRoutingComponent } from './basic-routing/basic-routing.component';
+import { RoutingComponent } from './routing/routing.component';
+import { RoutingHomeComponent } from './routing/routing-home/routing-home.component';
+import { RoutingAboutComponent } from './routing/routing-about/routing-about.component';
+import { RoutingContactsComponent } from './routing/routing-contacts/routing-contacts.component';
 
 @NgModule({
   declarations: [
@@ -80,9 +83,12 @@ import { BasicRoutingComponent } from './basic-routing/basic-routing.component';
     SubAppBComponent,
     HomeComponent,
     AboutComponent,
-    ContactComponent,
     ContactsComponent,
     BasicRoutingComponent,
+    RoutingComponent,
+    RoutingHomeComponent,
+    RoutingAboutComponent,
+    RoutingContactsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [MainService],

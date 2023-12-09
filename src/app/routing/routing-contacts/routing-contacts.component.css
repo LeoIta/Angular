@@ -1,0 +1,17 @@
+table,
+td,
+th {
+  border: 1px black solid;
+  border-collapse: collapse;
+}
+
+td,
+th,
+button {
+  padding: 10px;
+}
+
+div,
+button {
+  margin-top: 20px;
+}

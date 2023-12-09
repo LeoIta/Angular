@@ -1,0 +1,11 @@
+a {
+  border: 1px black solid;
+  background-color: whitesmoke;
+  text-decoration: none;
+  padding: 10px 5px;
+}
+
+.active {
+  color: whitesmoke;
+  background-color: green;
+}

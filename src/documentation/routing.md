@@ -51,6 +51,17 @@ If you define the routing directly in the `app.module.ts`, without having a dedi
 1. create the constant `const routes: Routes = [];`
 2. add to `imports` in `app.module.ts` the `RouterModule.forRoot(routes)`
 
+This `routes` will be use:
+
+1. [to display components in basic views](#how-to-set-basic-routing) (e.g. `http://localhost:4200/contacts`)
+2. [to map routing of components using parameters](#how-to-redirect-to-a-new-view-with-parameters-and-how-to-retrieve-them) (e.g. `http://localhost:4200/about/Paris/France`)
+3. to map routing of components using query parameters and fragments (e.g. `http://localhost:4200/about?allowEdit=1#loading`)
+4. to display child (nested) components in the views (e.g. `http://localhost:4200/about`)
+5. to map redirection (e.g. when `http://localhost:4200/xxxxx` then redirect to the homepage)
+6. to guard the navigate into the view (e.g. you can access `http://localhost:4200/about` only if you have some rights)
+7. to guard the navigate away from the view (e.g. ask confirmation before changing pages, to avoid data change losses)
+8. to pass static or dynamic data to the views using `resolver`
+
 ## How to set basic routing
 
 In order to set basic routing for some views, you need to add as argument of `const routes: Routes = [];` one object, for each routing, with parameters:
@@ -136,7 +147,7 @@ Let's take as example a button inside `about` component that will redirect to `c
 
 1. add a button in the about template that on click event calls a method (e.g. goToContacts())
 2. inject in the constructor the `router: Router`
-3. use in the method the `navigate` method that accept as argument an Array of paths:
+3. use in the method the `navigate` method of `router: Router` that accept as argument an Array of paths:
 
    ```
    goToContacts() {
@@ -154,3 +165,48 @@ this.router.navigate(['about'], { relativeTo: this.route });
 ```
 
 If this method is inside the `AboutComponent`, with path `http://localhost:4200/about`, Angular will append the relative path `'about'` to the `relativeTo path` that will be set to `http://localhost:4200/about`, then the full link will be `http://localhost:4200/about/about`.
+
+## How to redirect to a new view with parameters and how to retrieve them
+
+You could want to map a component or part of it to a path that contains also parameters, like id.
+
+In this case you should add to the list under routes, the path and a `:` followed by the parameter name, like:
+
+```
+  { path: 'about/:city/:country', component: RoutingAboutComponent },
+```
+
+The above line means that when you have an URL that after `about` has two values, you will have that 1st value will be assigned to the property called `city` and the second to `country`. \
+E.g. writing url `http://localhost:4200/about/Paris/France`, Angular will understand:
+
+- country = 'France'
+- city = 'Paris'
+
+You can retrieve these properties in two main ways using the `route:ActivatedRoute`:
+
+1. `static`, needed if you do not change them from the same view
+2. `dinamic`, if you plan to change them from the same view
+
+To retrieve in the static way, e.g. the parameter `country`, you have to use the `snapshot` follow by the `params`, that contains all the parameters of the current path:
+`this.country = this.route.snapshot.params['country']`
+
+To retrieve in the dinamic way, e.g. the parameter `city`, you have to use directly the `params`, that contains all the parameters of the current path, and subscribe it:
+
+```
+this.route.params
+  .subscribe((params:Params) => this.city = param['city'])
+```
+
+This will update the value of city when it changes in the path.
+
+To navigate to e.g. `http://localhost:4200/about/Paris/France`, you use the `navigate` method of `router: Router` in the ts file:
+
+```
+this.router.navigate(['about', 'Paris', 'France'])
+```
+
+or the routeLink in the HTML template:
+
+```
+[routerLink] = ['about', 'Paris', 'France']
+```
