@@ -1,0 +1,25 @@
+table,
+td,
+th {
+  border: 1px black solid;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+td,
+th,
+button {
+  padding: 10px;
+}
+
+div,
+button {
+  margin-top: 20px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 33vw;
+  justify-content: space-around;
+}

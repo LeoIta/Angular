@@ -56,7 +56,7 @@ This `routes` will be use:
 1. [to display components in basic views](#how-to-set-basic-routing) (e.g. `http://localhost:4200/contacts`)
 2. [to map routing of components using parameters](#how-to-redirect-to-a-new-view-with-parameters-and-how-to-retrieve-them) (e.g. `http://localhost:4200/about/Paris/France`)
 3. [to map routing of components using query parameters and fragments](#how-to-redirect-to-a-new-view-with-query-parameters-and-fragments) (e.g. `http://localhost:4200/about?allowEdit=1#loading`)
-4. to display child (nested) components in the views (e.g. `http://localhost:4200/about`)
+4. [to display child (nested) components in the views](#how-to-set-routing-for-child) (e.g. `http://localhost:4200/about`)
 5. to map redirection (e.g. when `http://localhost:4200/xxxxx` then redirect to the homepage)
 6. to guard the navigate into the view (e.g. you can access `http://localhost:4200/about` only if you have some rights)
 7. to guard the navigate away from the view (e.g. ask confirmation before changing pages, to avoid data change losses)
@@ -77,7 +77,7 @@ const routes: Routes = [
 ];
 ```
 
-To _activate the routing_ inside the component, you need to add the special element `<router-outlet></router-outlet>`, where you want to have the routing, ad remove all the component involved in the routing.
+To _activate the routing_ inside the component, you need to add the special element `<router-outlet></router-outlet>`, where you want to have the routing, and remove all the component involved in the routing.
 
 **Please note** that the path for `http://localhost:4200/about` is `'about'` and not `'/about'` or `'\about'` or the app will not display any view.
 
@@ -283,3 +283,26 @@ To navigate to e.g. `http://localhost:4200/about?logged=true&role=admin#user`, y
   [queryParams]="{'logged':true, 'role':'admin'}"
   fragment="user"
   ```
+
+## How to set routing for child
+
+In order to set routing for a child component/view, you need to add to the parent routing a property calles `children` and value a list of objects, one for each routing, with parameters:
+
+- `path` to define the URL to be display conntected with the component define in the next property
+- `component` to define which view (component) to display for that particular URL (`path`)
+
+```
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'users', component: UsersComponent, children:[
+    {path: ':id', component: UserComponent},
+  ] },
+];
+```
+
+To _activate the routing_ of the children inside the component, you need to add the special element `<router-outlet></router-outlet>`, where you want to have the routing, and remove all the component involved in the routing.
+
+**Please note** that the path for `http://localhost:4200/users/:id` is just `':id'` because child will inherit the path from its parent.
+
+To redirect to a new view (new virtual page) without reloading the page, as the simple routing you'll do the same as described in the [routing redirection session](#how-to-redirect-to-a-new-view-new-virtual-page).

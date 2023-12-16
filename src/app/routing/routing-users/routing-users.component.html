@@ -1,0 +1,15 @@
+<div class="flex-container">
+  <table *ngIf="users.length!=0">
+    <thead>
+      <th>Name</th>
+      <th>Details</th>
+    </thead>
+    <tbody *ngFor="let user of users; index as i">
+      <td>{{user.firstname}} {{user.lastname}}</td>
+      <td><a routerLink="{{i}}">edit user details</a></td>
+    </tbody>
+  </table>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

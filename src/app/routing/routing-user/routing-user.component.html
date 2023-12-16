@@ -1,0 +1,10 @@
+<form class="details">
+  <label for="firstname">Firstname</label>
+  <input name="firstname" [(ngModel)]="firstname"><br><br>
+  <label for="lastname">Lastname</label>
+  <input name="lastname" [(ngModel)]="lastname"><br><br>
+  <label for="age">Age</label>
+  <input type="number" name="age" [(ngModel)]="age"><br><br>
+  <button (click)="onSave()">Save</button>
+  <button (click)="onCancel()">Cancel</button>
+</form>
