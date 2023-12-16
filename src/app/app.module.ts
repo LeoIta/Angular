@@ -47,6 +47,7 @@ import { RoutingAboutComponent } from './routing/routing-about/routing-about.com
 import { RoutingContactsComponent } from './routing/routing-contacts/routing-contacts.component';
 import { RoutingUsersComponent } from './routing/routing-users/routing-users.component';
 import { RoutingUserComponent } from './routing/routing-user/routing-user.component';
+import { NotFoundComponent } from './routing/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { RoutingUserComponent } from './routing/routing-user/routing-user.compon
     RoutingContactsComponent,
     RoutingUsersComponent,
     RoutingUserComponent,
+    NotFoundComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [MainService],

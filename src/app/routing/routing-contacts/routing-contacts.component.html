@@ -1,4 +1,4 @@
-<div class="content" *ngIf="id<0">
+<div class="content" *ngIf="!(id!>-1)">
   <h3>Contacts list</h3>
   <table>
     <thead>
@@ -15,7 +15,7 @@
     </tbody>
   </table>
 </div>
-<div class="content" *ngIf="id>=0">
+<div class="content" *ngIf="id!>-1">
   <table>
     <tr>
       <th>Firstname</th>

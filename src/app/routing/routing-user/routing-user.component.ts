@@ -32,10 +32,14 @@ export class RoutingUserComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.index = +params['id'];
-      this.user = this.usersService.getUser(this.index);
-      this.firstname = this.user.firstname;
-      this.lastname = this.user.lastname;
-      this.age = this.user.age;
+      if (this.index > -1 && this.index < this.usersService.getUsers().length) {
+        this.user = this.usersService.getUser(this.index);
+        this.firstname = this.user.firstname;
+        this.lastname = this.user.lastname;
+        this.age = this.user.age;
+      } else {
+        this.router.navigate(['error']);
+      }
     });
     this.route.queryParams.subscribe((queryParams: Params) => {
       this.logged = queryParams['logged'] === 'true';

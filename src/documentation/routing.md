@@ -57,7 +57,7 @@ This `routes` will be use:
 2. [to map routing of components using parameters](#how-to-redirect-to-a-new-view-with-parameters-and-how-to-retrieve-them) (e.g. `http://localhost:4200/about/Paris/France`)
 3. [to map routing of components using query parameters and fragments](#how-to-redirect-to-a-new-view-with-query-parameters-and-fragments) (e.g. `http://localhost:4200/about?allowEdit=1#loading`)
 4. [to display child (nested) components in the views](#how-to-set-routing-for-child) (e.g. `http://localhost:4200/about`)
-5. to map redirection (e.g. when `http://localhost:4200/xxxxx` then redirect to the homepage)
+5. [to map redirection](#routing-redirection-and-error-page) (e.g. when `http://localhost:4200/xxxxx` then redirect to the homepage)
 6. to guard the navigate into the view (e.g. you can access `http://localhost:4200/about` only if you have some rights)
 7. to guard the navigate away from the view (e.g. ask confirmation before changing pages, to avoid data change losses)
 8. to pass static or dynamic data to the views using `resolver`
@@ -344,3 +344,30 @@ To _activate the routing_ of the children inside the component, you need to add 
 **Please note** that the path for `http://localhost:4200/users/:id` is just `':id'` because child will inherit the path from its parent.
 
 To redirect to a new view (new virtual page) without reloading the page, as the simple routing you'll do the same as described in the [routing redirection session](#how-to-redirect-to-a-new-view-new-virtual-page).
+
+## Routing redirection and error page
+
+Sometimes you want to redirect a path to another one, like e.g. when no path is set, you wnat to be redirected to the home page. In this case you have to use as second property after the path the `redirectTo:` instead of `component`:
+
+```
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: RoutingHomeComponent },
+```
+
+In this previous example if you are in `http://localhost:4200/` or `http://localhost:4200/home` you'll be always redirect to `http://localhost:4200/home` and then to the view of `RoutingHomeComponent`
+
+**Please note** that by default, Angular matches paths by prefix so the path `''` will match both paths `''` and `'/something'` and will always redirect you. \
+To avoid this error, you MUST set the matching strategy to exact match using `pathMatch: 'full'`; in this way you'll be redirect only for `''`
+
+You would like to display an error page if user enter an invalid path, in this case you'll create an error page and you'll redirect all the invalid page, not mapped in the routing, to the error page:
+
+```
+  { path: 'error', component: NotFoundComponent, },
+  { path: '**', redirectTo: 'error', },
+```
+
+In the above example, you have created a Not Found error page, and you redirect any not mapped view to this error view.
+
+To indicate in only one path all the others, you have to use the wildcard `'**'`.
+
+**Please note** that the wildcard should be used at the end of the route configuration, or all the routing after it, will be ignored.

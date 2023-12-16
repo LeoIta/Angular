@@ -5,6 +5,7 @@ import { RoutingAboutComponent } from './routing/routing-about/routing-about.com
 import { RoutingContactsComponent } from './routing/routing-contacts/routing-contacts.component';
 import { RoutingUsersComponent } from './routing/routing-users/routing-users.component';
 import { RoutingUserComponent } from './routing/routing-user/routing-user.component';
+import { NotFoundComponent } from './routing/not-found/not-found.component';
 // import { AboutComponent } from './basic-routing/about/about.component';
 // import { ContactsComponent } from './basic-routing/contacts/contacts.component';
 // import { HomeComponent } from './basic-routing/home/home.component';
@@ -13,7 +14,8 @@ const routes: Routes = [
   // { path: '', component: HomeComponent },
   // { path: 'about', component: AboutComponent },
   // { path: 'contacts', component: ContactsComponent },
-  { path: '', component: RoutingHomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: RoutingHomeComponent },
   { path: 'about', component: RoutingAboutComponent },
   { path: 'about/:country/:city', component: RoutingAboutComponent },
   { path: 'contacts', component: RoutingContactsComponent },
@@ -22,6 +24,14 @@ const routes: Routes = [
     path: 'users',
     component: RoutingUsersComponent,
     children: [{ path: ':id', component: RoutingUserComponent }],
+  },
+  {
+    path: 'error',
+    component: NotFoundComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'error',
   },
 ];
 

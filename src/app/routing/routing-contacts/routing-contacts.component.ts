@@ -16,7 +16,7 @@ export class RoutingContactsComponent implements OnInit {
     private router: Router
   ) {}
 
-  id = -1;
+  id?: number;
   max = 0;
   min = 0;
 
@@ -33,23 +33,25 @@ export class RoutingContactsComponent implements OnInit {
     this.contacts = this.contactsService.getContacts();
     this.max = this.contacts.length;
     this.route.params.subscribe((params: Params) => {
-      this.id = isNaN(params['id']) ? -1 : parseInt(params['id']);
-      if (this.id !== -1) {
-        this.contact = this.contactsService.getContact(this.id);
-      }
+      this.id = parseInt(params['id']);
+      console.log(this.id);
+      this.contact = this.contactsService.getContact(this.id);
     });
+    if (this.id! > this.max || this.id! < this.min) {
+      this.router.navigate(['error']);
+    }
   }
 
   toPrevious() {
-    if (this.id < this.max && this.id > this.min) {
-      this.id--;
+    if (this.id! < this.max && this.id! > this.min) {
+      this.id!--;
       this.router.navigate(['../', this.id], { relativeTo: this.route });
     }
   }
 
   toNext() {
-    if (this.id < this.max - 1 && this.id >= this.min) {
-      this.id++;
+    if (this.id! < this.max - 1 && this.id! >= this.min) {
+      this.id!++;
       this.router.navigate(['../', this.id], { relativeTo: this.route });
     }
   }
