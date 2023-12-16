@@ -284,6 +284,44 @@ To navigate to e.g. `http://localhost:4200/about?logged=true&role=admin#user`, y
   fragment="user"
   ```
 
+**Please note** that when you route to another view, by default you loss your `query params` and `fragments`. You can decide if keep them or not, setting a properties `queryParamsHandling` and `preserveFragment`.
+
+For `query params` you can set to `merge` or `preserve` the property `queryParamsHandling`:
+
+- `queryParamsHandling='merge'` will keep all the existing params and add/update the one you mention in the property `[queryParams]={key:value}`
+- `queryParamsHandling='preserve'`will keep all the existing params without adding or updating any
+
+For `fragments` you can set to `true` or `false` the property `preserveFragment`:
+
+- `preserveFragment=false` will not keep the current fragment and will update it with a new value if any fragment definition is provided
+- `preserveFragment=false` will keep the fragment and will not update it even if a new value is provided
+
+If used with `routerLink` you can use them like below:
+
+```
+<button
+      [routerLink]="[]"
+      [queryParams]="{'logged':false}"
+      queryParamsHandling='merge'
+      fragment="user"
+      preserveFragment="false">
+Logout
+</button>
+```
+
+If used with `navigate()` method, you can use them like below:
+
+```
+login() {
+  this.router.navigate([], {
+    relativeTo: this.route,
+    queryParams: { logged: true },
+    queryParamsHandling: 'merge',
+    preserveFragment: true,
+  });
+}
+```
+
 ## How to set routing for child
 
 In order to set routing for a child component/view, you need to add to the parent routing a property calles `children` and value a list of objects, one for each routing, with parameters:

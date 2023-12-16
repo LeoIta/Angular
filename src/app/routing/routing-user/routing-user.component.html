@@ -1,10 +1,12 @@
-<form class="details">
+<form class="details" *ngIf="logged">
   <label for="firstname">Firstname</label>
-  <input name="firstname" [(ngModel)]="firstname"><br><br>
+  <input name="firstname" [(ngModel)]="firstname" [disabled]="!(logged && admin)"><br><br>
   <label for="lastname">Lastname</label>
-  <input name="lastname" [(ngModel)]="lastname"><br><br>
+  <input name="lastname" [(ngModel)]="lastname" [disabled]="!(logged && admin)"><br><br>
   <label for="age">Age</label>
-  <input type="number" name="age" [(ngModel)]="age"><br><br>
-  <button (click)="onSave()">Save</button>
+  <input type="number" name="age" [(ngModel)]="age" [disabled]="!(logged && admin)"><br><br>
+  <button (click)="onSave()" [disabled]="!(logged && admin)">Save</button>
   <button (click)="onCancel()">Cancel</button>
 </form>
+<p *appUnless="logged" class="alert">Please login to check details</p>
+<p *ngIf="logged && !admin" class="alert">You need to be admin to edit details</p>

@@ -11,3 +11,11 @@ label {
 .details {
   max-width: 10vw;
 }
+
+.alert {
+  background-color: #fa4343;
+  color: white;
+  border-radius: 5px;
+  border: 1px solid #ff0000;
+  padding: 5px;
+}

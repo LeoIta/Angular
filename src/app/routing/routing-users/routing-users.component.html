@@ -1,14 +1,22 @@
 <div class="flex-container">
-  <table *ngIf="users.length!=0">
-    <thead>
-      <th>Name</th>
-      <th>Details</th>
-    </thead>
-    <tbody *ngFor="let user of users; index as i">
-      <td>{{user.firstname}} {{user.lastname}}</td>
-      <td><a routerLink="{{i}}">edit user details</a></td>
-    </tbody>
-  </table>
+  <div>
+    <table *ngIf="users.length!=0">
+      <thead>
+        <th>Name</th>
+        <th>Details</th>
+      </thead>
+      <tbody *ngFor="let user of users; index as i">
+        <td>{{user.firstname}} {{user.lastname}}</td>
+        <td><a routerLink="{{i}}" queryParamsHandling="preserve" preserveFragment="true">edit user details</a></td>
+      </tbody>
+    </table>
+    <button (click)="login()">Login</button>
+    <button [routerLink]="[]" [queryParams]="{'logged':false}" queryParamsHandling='merge' fragment="user">
+      Logout
+    </button>
+    <button (click)="addAdmin()">Admin</button>
+    <button [routerLink]="[]" [queryParams]="{'admin':false}" queryParamsHandling="merge">Not admin</button>
+  </div>
   <div>
     <router-outlet></router-outlet>
   </div>

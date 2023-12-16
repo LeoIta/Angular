@@ -26,6 +26,8 @@ export class RoutingUserComponent implements OnInit {
   age = 0;
 
   index = 0;
+  logged = true;
+  admin = false;
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -35,10 +37,14 @@ export class RoutingUserComponent implements OnInit {
       this.lastname = this.user.lastname;
       this.age = this.user.age;
     });
+    this.route.queryParams.subscribe((queryParams: Params) => {
+      this.logged = queryParams['logged'] === 'true';
+      this.admin = queryParams['admin'] === 'true';
+    });
   }
 
   onCancel() {
-    this.router.navigate(['/users']);
+    this.router.navigate(['/users'], { queryParamsHandling: 'preserve' });
   }
 
   onSave() {
