@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactsService } from '../contacts.service';
+import { ContactsService } from '../services/contacts.service';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
-import { Contact } from '../contact.model';
+import { Contact } from '../models/contact.model';
 
 @Component({
   selector: 'app-routing-contacts',
@@ -34,7 +34,6 @@ export class RoutingContactsComponent implements OnInit {
     this.max = this.contacts.length;
     this.route.params.subscribe((params: Params) => {
       this.id = parseInt(params['id']);
-      console.log(this.id);
       this.contact = this.contactsService.getContact(this.id);
     });
     if (this.id! > this.max || this.id! < this.min) {

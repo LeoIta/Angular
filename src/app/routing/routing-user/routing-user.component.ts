@@ -1,19 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../users.service';
-import { User } from '../user.model';
+import { UsersService } from '../services/users.service';
+import { User } from '../models/user.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { EditField } from '../models/edit-field.model';
 
 @Component({
   selector: 'app-routing-user',
   templateUrl: './routing-user.component.html',
   styleUrls: ['./routing-user.component.css'],
 })
-export class RoutingUserComponent implements OnInit {
+export class RoutingUserComponent implements OnInit, EditField {
   constructor(
     private usersService: UsersService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
+  isLogged(): boolean {
+    return this.logged;
+  }
+  isAdmin(): boolean {
+    return this.admin;
+  }
+  isSaved(): boolean {
+    return this.saved;
+  }
 
   user: User = {
     firstname: 'string',
@@ -24,7 +34,7 @@ export class RoutingUserComponent implements OnInit {
   firstname = 'string';
   lastname = 'string';
   age = 0;
-
+  saved = false;
   index = 0;
   logged = true;
   admin = false;
@@ -48,6 +58,7 @@ export class RoutingUserComponent implements OnInit {
   }
 
   onCancel() {
+    this.saved = false;
     this.router.navigate(['/users'], { queryParamsHandling: 'preserve' });
   }
 
@@ -58,6 +69,15 @@ export class RoutingUserComponent implements OnInit {
       age: this.age,
     };
     this.usersService.updateUser(newUser, this.index);
-    this.onCancel();
+    this.saved = true;
+    this.router.navigate(['/users'], { queryParamsHandling: 'preserve' });
+  }
+
+  anyChange() {
+    return (
+      this.user.age !== this.age ||
+      this.user.firstname !== this.firstname ||
+      this.user.lastname !== this.lastname
+    );
   }
 }

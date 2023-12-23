@@ -2,7 +2,7 @@
 <p>City: {{city}}</p>
 <p>Country: {{country}}</p>
 
-<p>This user has permission: {{hasPermissions}}</p>
+<p>This user {{hasPermissions}}</p>
 
 <a [routerLink]="['/about']" [queryParams]="{'logged':true, 'role':'admin'}" fragment="user">
   <button>

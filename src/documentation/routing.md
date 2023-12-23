@@ -58,9 +58,8 @@ This `routes` will be use:
 3. [to map routing of components using query parameters and fragments](#how-to-redirect-to-a-new-view-with-query-parameters-and-fragments) (e.g. `http://localhost:4200/about?allowEdit=1#loading`)
 4. [to display child (nested) components in the views](#how-to-set-routing-for-child) (e.g. `http://localhost:4200/about`)
 5. [to map redirection](#routing-redirection-and-error-page) (e.g. when `http://localhost:4200/xxxxx` then redirect to the homepage)
-6. to guard the navigate into the view (e.g. you can access `http://localhost:4200/about` only if you have some rights)
-7. to guard the navigate away from the view (e.g. ask confirmation before changing pages, to avoid data change losses)
-8. to pass static or dynamic data to the views using `resolver`
+6. [to guard how to navigate into and away from views](#guards) (e.g. you can access a page only if you have some rights, or you ask confirmation before changing pages, to avoid data change losses)
+7. to pass static or dynamic data to the views using `resolver`
 
 ## How to set basic routing
 
@@ -371,3 +370,97 @@ In the above example, you have created a Not Found error page, and you redirect 
 To indicate in only one path all the others, you have to use the wildcard `'**'`.
 
 **Please note** that the wildcard should be used at the end of the route configuration, or all the routing after it, will be ignored.
+
+## Guards
+
+With Angular you can control how to navigate in and away from page(s), in particular conditions:
+
+- `block the access`
+- `allow the access`
+- `allow user leaving`
+- `block user before leaving`
+
+These blocking conditions are set in const called `Guards` (e.g. `auth-admin.guard.ts`, `auth-edit.guard.ts`, etc.).
+
+You can generate them automatically using in the console:
+
+`ng generate guard guardName`
+
+or short version:
+
+`ng g g guardName`
+
+that will generate 2 files:
+
+- guardName.guard.ts
+- guardName.guard.spec.ts
+
+where second file is for testing purpose.
+
+In case you are not interested in writing tests, you can skip the creation of the second file using:
+`ng g g guardName --skip-tests=true`
+
+When you create it automatically, you will be asked to choose which guard you need:
+
+```
+? Which type of guard would you like to create? (Press <space> to select, <a> to toggle all,
+ <i> to invert selection, and <enter> to proceed)
+>(*) CanActivate
+ ( ) CanActivateChild
+ ( ) CanDeactivate
+ ( ) CanMatch
+```
+
+**Please note** that you can select ONLY ONE OPTION.
+
+From the above question, you can understand that the `guards`, based on their scope, can be of different types:
+
+1. `CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;`
+2. `CanActivateChildFn = (childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) => Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;`
+3. `CanDeactivateFn<T> = (component: T, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState: RouterStateSnapshot) => Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;`
+4. `CanMatchFn = (route: Route, segments: UrlSegment[]) => Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;`
+
+**please note** that `canMatch` replace the old `canLoad`
+
+The `guards` by default return true, it allows the access to the page. It can be set always to true or to false:
+
+```
+export const matchGuard: CanMatchFn = (route, segments) => {
+  return true;
+};
+```
+
+Or in most of the cases the answered is based on a condition coming from a service:
+
+- simplest case with `boolean` => `return inject(AuthService).isUserLogged();` that only allw or block access to the page without any additional step.
+- case with `Promise`:
+
+```
+export const authAdminGuard: CanActivateFn = async (route, state) => {
+  console.log('auth admin guard');
+  let router = inject(Router);
+  const isAdmin = await inject(AuthService).isUserAdmin();
+  if (isAdmin) {
+    return true;
+  } else {
+    router.navigate(['401']);
+    return false;
+  }
+};
+```
+
+where you decide what else do when block or allow access (e.g. in the above case user is re-directed to another view, the error view).
+
+### CanActivate, CanActivateChild, CanDeactivate, CanMatch
+
+In order to apply the access control to components and/or their children, in the `app-routing.modules.ts` file, under the routes array, for the specific path, you should add additional pair of key/value, like below:
+
+- canActivate: [canActivateGuard]
+- canActivateChild: [canActivateChildGuard]
+- canDeactivate: [canDeactivateGuard]
+- canMatch: [canMatchGuard]
+
+**Please note:** \
+When you use the `CanDeactivateFn<T>`, you should define to which class or interface you want to apply your guard, in order to be able to consume methods and properties of the component to which you want to apply the guard.\
+Using class, you restrict the guard to only one use. Using interface, you extend the use to all the classes that implement the interface.\
+E.g.the guard [authEditGuard](../app/routing/guards/auth-edit.guard.ts) use the interface [EditField](../app/routing/models/edit-field.model.ts) so it can be applied to [RoutingUserComponent](../app/routing/routing-user/routing-user.component.ts) that implements `EditField`.

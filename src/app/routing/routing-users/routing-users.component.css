@@ -20,6 +20,6 @@ button {
 .flex-container {
   display: flex;
   flex-direction: row;
-  max-width: 33vw;
+  max-width: 50vw;
   justify-content: space-around;
 }

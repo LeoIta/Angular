@@ -6,6 +6,12 @@ import { RoutingContactsComponent } from './routing/routing-contacts/routing-con
 import { RoutingUsersComponent } from './routing/routing-users/routing-users.component';
 import { RoutingUserComponent } from './routing/routing-user/routing-user.component';
 import { NotFoundComponent } from './routing/not-found/not-found.component';
+import { authLoggedGuard } from './routing/guards/auth-logged.guard';
+import { authAdminGuard } from './routing/guards/auth-admin.guard';
+import { UnauthorizedComponent } from './routing/unauthorized/unauthorized.component';
+import { authEditGuard } from './routing/guards/auth-edit.guard';
+import { childGuard } from './routing/guards/child.guard';
+import { matchGuard } from './routing/guards/match.guard';
 // import { AboutComponent } from './basic-routing/about/about.component';
 // import { ContactsComponent } from './basic-routing/contacts/contacts.component';
 // import { HomeComponent } from './basic-routing/home/home.component';
@@ -16,18 +22,48 @@ const routes: Routes = [
   // { path: 'contacts', component: ContactsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: RoutingHomeComponent },
-  { path: 'about', component: RoutingAboutComponent },
-  { path: 'about/:country/:city', component: RoutingAboutComponent },
-  { path: 'contacts', component: RoutingContactsComponent },
-  { path: 'contacts/:id', component: RoutingContactsComponent },
+  {
+    path: 'about',
+    component: RoutingAboutComponent,
+    canActivate: [authLoggedGuard],
+  },
+  {
+    path: 'about/:country/:city',
+    component: RoutingAboutComponent,
+    canActivate: [authLoggedGuard],
+  },
+  {
+    path: 'contacts',
+    component: RoutingContactsComponent,
+    canActivate: [authLoggedGuard],
+  },
+  {
+    path: 'contacts/:id',
+    component: RoutingContactsComponent,
+    canActivate: [authLoggedGuard],
+  },
   {
     path: 'users',
     component: RoutingUsersComponent,
-    children: [{ path: ':id', component: RoutingUserComponent }],
+    children: [
+      {
+        path: ':id',
+        component: RoutingUserComponent,
+        canDeactivate: [authEditGuard],
+      },
+    ],
+    // canActivate: [authLoggedGuard],
+    canActivate: [authLoggedGuard],
+    canActivateChild: [authAdminGuard],
+    canMatch: [matchGuard],
   },
   {
     path: 'error',
     component: NotFoundComponent,
+  },
+  {
+    path: '401',
+    component: UnauthorizedComponent,
   },
   {
     path: '**',
