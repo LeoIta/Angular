@@ -59,7 +59,8 @@ This `routes` will be use:
 4. [to display child (nested) components in the views](#how-to-set-routing-for-child) (e.g. `http://localhost:4200/about`)
 5. [to map redirection](#routing-redirection-and-error-page) (e.g. when `http://localhost:4200/xxxxx` then redirect to the homepage)
 6. [to guard how to navigate into and away from views](#guards) (e.g. you can access a page only if you have some rights, or you ask confirmation before changing pages, to avoid data change losses)
-7. to pass static or dynamic data to the views using `resolver`
+7. [to pass static or dynamic data to the views](#pass-static-data-to-routes)
+8. [to pass dinamic data using resolvers](#resolvers)
 
 ## How to set basic routing
 
@@ -461,6 +462,82 @@ In order to apply the access control to components and/or their children, in the
 - canMatch: [canMatchGuard]
 
 **Please note:** \
-When you use the `CanDeactivateFn<T>`, you should define to which class or interface you want to apply your guard, in order to be able to consume methods and properties of the component to which you want to apply the guard.\
+The `CanDeactivateFn<T>` is a generic type, you must define to which class or interface you want to apply your guard (T), in order to be able to consume methods and properties of the component to which you want to apply the guard.\
 Using class, you restrict the guard to only one use. Using interface, you extend the use to all the classes that implement the interface.\
 E.g.the guard [authEditGuard](../app/routing/guards/auth-edit.guard.ts) use the interface [EditField](../app/routing/models/edit-field.model.ts) so it can be applied to [RoutingUserComponent](../app/routing/routing-user/routing-user.component.ts) that implements `EditField`.
+
+## Pass static data to routes
+
+It is possible to pass static data to route using `data` objects inside the routing
+
+You can customize the [NotFoundComponent](../../src/app/routing/not-found/not-found.component.ts), making message dinamic, using the data object inside the route:
+
+```
+  {
+    path: 'error',
+    component: NotFoundComponent,
+    data: { message: '404 - Page Not Found!' },
+  },
+
+```
+
+You can then read this data using route:
+
+```
+  constructor(private route: ActivatedRoute) {}
+  message = '';
+  ngOnInit(): void {
+    this.route.data.subscribe((data: Data) => (this.message = data['message']));
+  }
+```
+
+**Please note** that the key name, in this case case `message`, can have anything, but the key of the object MUST be `data`
+
+## Resolvers
+
+You can generate resolvers using command:
+`ng generate resolver userResolver`
+
+or the short version:
+`ng g r userResolver`
+
+It will generate two files:
+
+- `user.resolver.spec.ts`
+- `user.resolver.ts`
+
+If you are not interested in testing, you can skip the creation of the second file using:
+`ng g r userResolver --skip-tests=true`
+
+The resolver is a const of generic type `ResolverFn<T>` like:
+
+```
+ResolveFn<T> = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => Observable<T> | Promise<T> | T;
+```
+
+so you need to specify the type T and move some code for loading data from the component to the resolver that will resolve the data before even loading the component.
+
+The `resolver` could contain and replace part of the logic of the component like e.g. in [RoutingUser](../app/routing/routing-user/routing-user.component.ts)
+
+To be able to consume it, you should map this resolver in the same path in the route, as the component.
+
+In this case you'll use `UserResolver` inside `RoutingUserComponent`, so in the routing you need to set resolver as below:
+
+```
+      {
+        path: ':id',
+        component: RoutingUserComponent,
+        resolve: { user: userResolver },
+      },
+
+```
+
+In this way the `resolver` can be called using the route:
+
+```
+this.route.data.subscribe((data: Data) =>
+      this.user = data['user'];)
+```
+
+where the `'user'` has same name as the key of the pair indicate in the `resolve`:
+`resolve: { user: userResolver },`

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { User } from '../models/user.model';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import { EditField } from '../models/edit-field.model';
 
 @Component({
@@ -40,17 +40,23 @@ export class RoutingUserComponent implements OnInit, EditField {
   admin = false;
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.index = +params['id'];
-      if (this.index > -1 && this.index < this.usersService.getUsers().length) {
-        this.user = this.usersService.getUser(this.index);
-        this.firstname = this.user.firstname;
-        this.lastname = this.user.lastname;
-        this.age = this.user.age;
-      } else {
-        this.router.navigate(['error']);
-      }
+    console.log('component init');
+    // this.route.params.subscribe((params: Params) => {
+    //   this.index = +params['id'];
+    //   if (this.index > -1 && this.index < this.usersService.getUsers().length) {
+    //     this.user = this.usersService.getUser(this.index);
+    this.route.data.subscribe((data: Data) => {
+      this.user = data['user'];
+      console.log(this.user);
+      this.firstname = this.user.firstname;
+      this.lastname = this.user.lastname;
+      this.age = this.user.age;
     });
+
+    // } else {
+    //   this.router.navigate(['error']);
+    // }
+    // });
     this.route.queryParams.subscribe((queryParams: Params) => {
       this.logged = queryParams['logged'] === 'true';
       this.admin = queryParams['admin'] === 'true';

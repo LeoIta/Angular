@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-routing-users',
   templateUrl: './routing-users.component.html',
   styleUrls: ['./routing-users.component.css'],
-  providers: [UsersService],
 })
 export class RoutingUsersComponent implements OnInit {
   constructor(

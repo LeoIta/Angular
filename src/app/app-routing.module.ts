@@ -10,8 +10,8 @@ import { authLoggedGuard } from './routing/guards/auth-logged.guard';
 import { authAdminGuard } from './routing/guards/auth-admin.guard';
 import { UnauthorizedComponent } from './routing/unauthorized/unauthorized.component';
 import { authEditGuard } from './routing/guards/auth-edit.guard';
-import { childGuard } from './routing/guards/child.guard';
 import { matchGuard } from './routing/guards/match.guard';
+import { userResolver } from './routing/resolvers/user.resolver';
 // import { AboutComponent } from './basic-routing/about/about.component';
 // import { ContactsComponent } from './basic-routing/contacts/contacts.component';
 // import { HomeComponent } from './basic-routing/home/home.component';
@@ -49,10 +49,10 @@ const routes: Routes = [
       {
         path: ':id',
         component: RoutingUserComponent,
+        resolve: { user: userResolver },
         canDeactivate: [authEditGuard],
       },
     ],
-    // canActivate: [authLoggedGuard],
     canActivate: [authLoggedGuard],
     canActivateChild: [authAdminGuard],
     canMatch: [matchGuard],
@@ -60,6 +60,7 @@ const routes: Routes = [
   {
     path: 'error',
     component: NotFoundComponent,
+    data: { message: '404 - Page Not Found!' },
   },
   {
     path: '401',
