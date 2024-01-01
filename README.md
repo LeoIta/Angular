@@ -22,6 +22,7 @@ Index:
 5. [Directives](#directives)
 6. [Services](#services)
 7. [Routing](#routing)
+8. [Forms](#forms)
 
 ## Run the application
 
@@ -125,3 +126,25 @@ The Router enables navigation by interpreting a browser URL as an instruction to
 The `routing` create a virtual URL, so users can change page and URL without reloading the page, as they are always on the same page, but different views are displayed.
 
 More details can be found in [routing.md](./src/documentation/routing.md) or on Angular documentation about [routing](https://angular.io/guide/routing-overview)
+
+## Forms
+
+Angular helps you to transform HTML forms into TypeScript object you can use to manipulate forms data.
+
+![Angular Forms](./src/assets/forms.jpg "Angular forms")
+
+Using Angular, you can obtain, from the `HTML form`, an object containing
+
+1. the `value` of the form in pair of control name/value
+2. the `status` of the form in boolean properties like e.g. valid, touched or submitted.
+
+There are two ways of handling forms in Angular:
+
+1. Template Driven (TD) form
+2. Reative form
+
+In the first case you handle the form mostly in the HTML template (useful for easy case)
+
+In the second case you handle the form with use of TypeScript. (suggested for more complicated operation related with the form).
+
+More details can be found in [forms.md](./src/documentation/forms.md) or on Angular documentation about [Angular forms](https://angular.dev/guide/forms)

@@ -1,0 +1,37 @@
+<form (ngSubmit)="onSubmit()" #myForm="ngForm">
+  <div ngModelGroup="personalData" #data="ngModelGroup">
+    <label>Name</label>
+    <input name="name" [ngModel]="defaultUser" required>
+    <label>Gender</label>
+    <input type="radio" name="gender" value="male" ngModel>male
+    <input type="radio" name="gender" value="female" ngModel>female
+    <label>Age</label>
+    <input type="number" name="age" ngModel>
+    <label>Mail</label>
+    <input type="mail" name="mail" ngModel required email>
+    <button type="button" (click)="setDefaultEmail()">Set default mail</button>
+  </div>
+  <p *ngIf="data.invalid && data.touched">Please enter the required personal data</p>
+  <label>Password</label>
+  <input type="password" name="password" ngModel required>
+  <label>Secret question</label>
+  <select name="secret" ngModel #question="ngModel">
+    <option value="pet">What was the name of your first pet?</option>
+    <option value="team">What is the name of your favourite football team?</option>
+  </select>
+  <label>Your answer</label>
+  <textarea name="answer" cols="30" rows="2" [(ngModel)]="secretAnswer"></textarea><br>
+  <button type="submit" [disabled]="!myForm.valid">Submit data</button>
+</form>
+<p *ngIf="question.dirty && secretAnswer.length>0">Your answer is {{secretAnswer}}</p>
+<div *ngIf="myForm.submitted">
+  <h3>Summary of your data</h3>
+  <p>Name: {{details.personalData.name}}</p>
+  <p>Gender: {{details.personalData.gender}}</p>
+  <p>Age: {{details.personalData.age}}</p>
+  <p>Mail: {{details.personalData.mail}}</p>
+  <p>Password: {{details.password}}</p>
+  <p>Secret question: {{details.secret}}</p>
+  <p>Answer: {{details.answer}}</p>
+
+</div>

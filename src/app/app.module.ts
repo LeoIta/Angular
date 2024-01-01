@@ -49,6 +49,11 @@ import { RoutingUsersComponent } from './routing/routing-users/routing-users.com
 import { RoutingUserComponent } from './routing/routing-user/routing-user.component';
 import { NotFoundComponent } from './routing/not-found/not-found.component';
 import { UnauthorizedComponent } from './routing/unauthorized/unauthorized.component';
+import { TdTemplateComponent } from './forms/td-template/td-template.component';
+import { BasicFormComponent } from './forms/td-template/basic-form.component';
+import { BasicNgFormComponent } from './forms/td-template/basic-ngForm.component';
+import { BasicControlNgModelComponent } from './forms/td-template/basic-control-ngModel.component';
+import { BasicValidatorsComponent } from './forms/td-template/basic-validators.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +102,11 @@ import { UnauthorizedComponent } from './routing/unauthorized/unauthorized.compo
     RoutingUserComponent,
     NotFoundComponent,
     UnauthorizedComponent,
+    TdTemplateComponent,
+    BasicFormComponent,
+    BasicNgFormComponent,
+    BasicControlNgModelComponent,
+    BasicValidatorsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [MainService],

@@ -1,0 +1,31 @@
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px;
+}
+
+input,
+select,
+textarea {
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: content-box;
+  width: 100%;
+}
+
+input[type="radio"] {
+  width: auto;
+  margin-top: 10px;
+}
+
+form {
+  margin: 10px;
+  width: 33vw;
+}
+
+label {
+  font-weight: 600;
+}

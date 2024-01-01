@@ -1,0 +1,14 @@
+form {
+  border: 3px solid black;
+  padding: 10px;
+  max-width: max-content;
+}
+label,
+button {
+  display: block;
+  margin: 10px 10px 10px 0;
+}
+input,
+button {
+  padding: 5px;
+}
