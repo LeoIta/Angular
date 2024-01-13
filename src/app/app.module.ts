@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,6 +54,7 @@ import { BasicFormComponent } from './forms/td-template/basic-form.component';
 import { BasicNgFormComponent } from './forms/td-template/basic-ngForm.component';
 import { BasicControlNgModelComponent } from './forms/td-template/basic-control-ngModel.component';
 import { BasicValidatorsComponent } from './forms/td-template/basic-validators.component';
+import { ReactiveFormComponent } from './forms/reactive-form/reactive-form.component';
 
 @NgModule({
   declarations: [
@@ -107,8 +108,9 @@ import { BasicValidatorsComponent } from './forms/td-template/basic-validators.c
     BasicNgFormComponent,
     BasicControlNgModelComponent,
     BasicValidatorsComponent,
+    ReactiveFormComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [MainService],
   bootstrap: [AppComponent],
 })

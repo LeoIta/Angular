@@ -332,3 +332,164 @@ and then use the details variable in the HTML template.
 ## Reactive forms
 
 Form is created programmatically and synchronized with the DOM.
+
+Let's see with this approach how to:
+
+1. [create basic form in ts code](#ts---create-basic-form-in-code)
+2. [submit form in ts code](#ts---submit-forms)
+3. [sync HTML and TS form](#ts---how-to-sync-html-and-ts-form)
+4. [sync controls and group them](#ts---grouping-controls)
+5. [arrays of controls](#ts---array-of-controls)
+6. [set default values and use build-in validators](#ts---default-values-and-build-in-validators)
+7. [create custom validators](#ts---create-custom-validators)
+8. [use error codes for validation error message](#ts---use-error-codes-for-validation-error-message)
+9. [create custom async validators](#ts---create-custom-async-validators)
+10. [edit and/or reset form](#ts---edit-and-reset-form)
+11. [react to status or value changes](#ts---react-to-status-or-value-changes)
+
+### TS - Create basic form in code
+
+It is possible to create the form template directly using the code, usually it is done in the ngOnInit() when the component is initialized.
+
+First you create a variable that will hold the form, e.g. `myForm`, that will be of type `FormGroup`:
+
+```
+myForm:!FormGroup
+```
+
+Now you can initialize the variable `myForm`. Each controls will be of type `FormControl`:
+
+```
+this.myForm = new FormGroup({
+      username: new FormControl(),
+      'mail': new FormControl()
+      });
+```
+
+### TS - Submit forms
+
+In HTML/CSS form, the submission is defined in the open tag form, defining `method` and `action` attributes, that usually use php script.
+
+In Angular form can be used the angular event `(ngSubmit)`, like below, to handle the form submission:
+
+```
+<form (ngSubmit)="onSubmit()">
+  <label>Username</label>
+  <input type="text"/>
+  <label>Mail</label>
+  <input type="email"/>
+  <button type="submit">Save</button>
+</form>
+```
+
+when users will push on the submit button, the onSubmit() method will be triggered.
+
+### TS - How to sync HTML and TS form
+
+In order to sync HTML and TS form you need to use the directive `[formGroup]`:
+
+```
+<form [formGroup]="myForm">
+  ...
+</form>
+```
+
+**Please note** that to be able to use the above directive you need to add `ReactiveFormsModule` in `app.module` under `imports:[]` or you'll get following error: `Can't bind to 'formGroup' since it isn't a known property of 'form'.`
+
+If you log in the console the variable `myForm`, you will see an object of type FormGroup and under the `controls` property:
+
+![form Controls not sync](../assets/not-syncrhronized-form-controls.jpg "form Controls not sync")
+
+Here Angular recognizes that the form has two controls, with name as in the TS form, but their are disconnected from the actual controls, in fact even if you assign a value in the form to any control, the console will always shows value `null`.
+
+Let see in the next section how to connect also the control.
+
+### TS - How to sync controls and group them
+
+In order to sync HTML and TS form you need to use the directive `[formControlName]`:
+
+```
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <label>Username</label>
+  <input type="text" [formControlName]= "'username'" />
+  <label>Mail</label>
+  <input type="email" formControlName = "mail" />
+  <button type="submit">Save</button>
+</form>
+```
+
+In this way Angular will be able to detect the controls value:
+
+![form Controls sync](../assets/syncrhronized-form-controls.jpg "form Controls sync").
+
+In case you want to group the controls in groups, in ts we use `FormGroup()`
+
+```
+this.myForm = new FormGroup({
+      personalData: new FormGroup({
+        name: new FormControl(),
+        gender: new FormControl(),
+        age: new FormControl(),
+      }),
+      mail: new FormControl()})
+```
+
+and in the HTML you need to group all these controls inside a container, e.g. a div and use in that div the directive `formGroupName` like:
+
+```
+<div formGroupName="personalData">
+```
+
+### TS - Array of controls
+
+Sometimes you need to give possibility to add an array of values, e.g. list of certifications.
+
+In order to allow user to insert one or more value, you need to use the `formArray`, that are array of controls.
+
+```
+    this.myForm = new FormGroup({
+      mail: new FormControl(),
+      languages: new FormArray([]),
+    });
+
+onAddLanguages() {
+  const control = new FormControl(null, Validators.required);
+  if (this.myForm.controls['languages'].valid) {
+    (<FormArray>this.myForm.get('languages')).push(control);
+  }
+}
+```
+
+In order to get an array from the get controls of the form `myForm.get('languages')`, you need to cast to `<FormArray>`.
+
+Same if you want to pass it inside the HTML template, first you need to put inside the method `ngOnInit` the cast to map to a new variable:
+
+```
+  languages!: FormArray;
+
+  ngOnInit(): void {
+    this.myForm = new FormGroup({
+      mail: new FormControl(),
+      languages: new FormArray([]),
+    });
+    this.languages = <FormArray>this.myForm.get('languages');
+  }
+```
+
+To sync the HTML with the TS file you need to use the `formArrayName` directive:
+
+```
+<div formArrayName="languages">
+```
+
+### TS - Default values and build-in validators
+
+### TS - Create custom validators
+
+### TS - Use error codes for validation error message
+
+### TS - Create custom async validators
+
+### TS - Edit and reset form
+
+### TS - React to status or value changes

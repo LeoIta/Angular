@@ -1,0 +1,31 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div formGroupName="personalData">
+    <label>Name</label>
+    <input formControlName="name">
+    <label>Gender</label>
+    <input type="radio" formControlName="gender" value="male">male
+    <input type="radio" formControlName="gender" value="female">female
+    <label>Age</label>
+    <input type="number" formControlName="age">
+  </div>
+  <label>Mail</label>
+  <input type="mail" formControlName="mail">
+  <label>Password</label>
+  <input type="password" formControlName="password">
+  <label>Secret question</label>
+  <select formControlName="secret">
+    <option value="pet">What was the name of your first pet?</option>
+    <option value="team">What is the name of your favourite football team?</option>
+  </select>
+  <label>Your answer</label>
+  <textarea formControlName="answer" cols="30" rows="2"></textarea>
+  <div formArrayName="languages">
+    <label>Known languages</label>
+    <button type="button" (click)="onAddLanguages()">Add a language</button>
+    <div *ngFor="let item of languages.controls; let i = index">
+      <input type="text" [formControlName]="i">
+    </div>
+  </div>
+  <br>
+  <button type="submit" [disabled]="myForm.invalid">Submit data</button>
+</form>
