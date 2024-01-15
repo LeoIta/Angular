@@ -654,4 +654,27 @@ If you inspect the DOM, after updating the mail, you can see that the class `ng-
 
 ### TS - Edit and reset form
 
+As in the Template driven approach you can do it using methods:
+
+- setValue()
+- patchValue()
+- reset()
+
+Check details in chapter [TD - Edit and reset form](#td---edit-and-reset-form).
+
 ### TS - React to status or value changes
+
+If it is possible to track the value changes or the status changes.
+
+```
+this.myForm.valueChanges.subscribe((value) => {
+  console.log('value changed!');
+  console.log(value);
+});
+
+this.myForm.statusChanges.subscribe((status) => {
+  console.log('current status of the form is: ' + status);
+});
+```
+
+In this way you are informed, real time, of any change happening in your form.

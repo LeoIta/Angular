@@ -48,6 +48,14 @@ export class ReactiveFormComponent implements OnInit {
       languages: new FormArray([]),
     });
     this.languages = <FormArray>this.myForm.get('languages');
+    this.myForm.valueChanges.subscribe((value) => {
+      console.log('value changed!');
+      console.log(value);
+    });
+
+    this.myForm.statusChanges.subscribe((status) => {
+      console.log('current status of the form is: ' + status);
+    });
   }
 
   onSubmit() {
