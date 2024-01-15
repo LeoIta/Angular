@@ -342,7 +342,7 @@ Let's see with this approach how to:
 5. [arrays of controls](#ts---array-of-controls)
 6. [set default values and use build-in validators](#ts---default-values-and-build-in-validators)
 7. [create custom validators](#ts---create-custom-validators)
-8. [use error codes for validation error message](#ts---use-error-codes-for-validation-error-message)
+8. [validate error message](#ts---how-to-validate-error-message)
 9. [create custom async validators](#ts---create-custom-async-validators)
 10. [edit and/or reset form](#ts---edit-and-reset-form)
 11. [react to status or value changes](#ts---react-to-status-or-value-changes)
@@ -484,11 +484,173 @@ To sync the HTML with the TS file you need to use the `formArrayName` directive:
 
 ### TS - Default values and build-in validators
 
+When you define a control in TS code, for a form, you can create a new object without providing any argument, or you can add arguments:
+
+- first argument is the default value of the control
+- single validator or array of validators
+- single of array of async validators, you'll see in the capter about [custom async validators](#ts---create-custom-async-validators)
+
+Examples with use of `build-in validators`:
+
+```
+pswRgx = '[A-Z]+[a-z]+[0-9]{2,}[!@#$%^&*]+';
+ngOnInit(): void {
+  this.myForm = new FormGroup({
+    name: new FormControl(null, Validators.required),
+    age: new FormControl(null,[Validators.min(18),Validators.max(90)]),
+    mail: new FormControl(null, [Validators.required, Validators.email]),
+    gender: new FormControl('male'),
+    password: new FormControl(null, [
+            Validators.pattern(this.pswRgx),
+            Validators.minLength(10),
+            Validators.maxLength(12),
+          ])
+  });
+}
+```
+
+Above you can see:
+
+- how to set default value, e.g. the control `gender` to `'male'`:
+  `gender: new FormControl('male')`
+- use of some build-in validators:
+  - `Validators.required`
+  - `Validators.min(18)`
+  - `Validators.max(90)`
+  - `Validators.email`
+  - `Validators.pattern(this.pswRgx)`
+  - `Validators.minLength(10)`
+  - `Validators.maxLength(12)`
+
+It is possible also to create custom validators.
+
 ### TS - Create custom validators
 
-### TS - Use error codes for validation error message
+Could be possible that, in your form, you want to check if the email has one of the allowed domains, or name is one of the not allowed values.
+
+You can create a function like below:
+
+```
+names(control: FormControl): { [s: string]: boolean } | null {
+  if (this.forbiddenNames.indexOf(control.value) !== -1) {
+    return { nameForbidden: true };
+  }
+  return null;
+}
+```
+
+The custom validators must accept at least one argument, the `control: FormControl` and must return a `ValidationErrors` object `{ [s: string]: boolean }` or `null`.
+
+In order to use it, you need to add the method in the array of the validators:
+
+```
+name: new FormControl(null, [
+          Validators.required,
+          this.names.bind(this),
+        ])
+
+```
+
+**Please note** that if you refer to a property of the component in the custom validator, you need to add `.bind(this)` to say to Angular to check this component when evaluate the control in the form. If you do not use the `bind` method, you'll get the error ` Cannot read properties of undefined`
+
+### TS - How to validate error message
+
+Also using TS template, you can use `states` to apply a style when a control is invalid.
+
+```
+input.ng-touched.ng-invalid {
+  outline: red solid 2px;
+}
+```
+
+You can create a message, accessing the `control state` in the HTML:
+
+```
+<p *ngIf="myForm.get('personalData')?.get('name')?.touched &&
+          myForm.get('personalData')?.get('name')?.invalid">
+  You must enter a valid name!
+</p>
+```
+
+In this case the name control has 2 validators:
+
+```
+name: new FormControl(null, [
+          Validators.required,
+          this.names.bind(this),
+        ]),
+```
+
+but the error message is only on generic.
+
+You can give better details to the user if you know the exact error that validation returns.
+
+Here become useful the `error codes` that appear under the specific controller inside `errors`
+
+```
+<p *ngIf="myForm.get('personalData')?.get('name')?.touched &&
+          myForm.get('personalData')?.get('name')?.invalid">
+  <span *ngIf="myForm.get('personalData')?.get('name')?.hasError('required')">
+    Name cannot be empty!
+  </span>
+  <span *ngIf="myForm.get('personalData')?.get('name')?.hasError('nameForbidden')">
+    You must enter a valid name!
+  </span>
+</p>
+```
+
+Here we have a customized error message based on the actual error validation; to call it you have to call the controller (`myForm.get('personalData')?.get('name')`) and use the `hasError()` method with argument the error name.
 
 ### TS - Create custom async validators
+
+Sometimes the validation could need to wait for some data coming from external source, e.g. database or answer got by HTTP call, in this case, you need an async validators.
+
+Let's create them using Observable or Promise:
+
+```
+  asyncForbiddenMailsObs(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return timer(1000).pipe(
+        map(() => {
+          return control.value === 'test@yahoo.com'
+            ? { mailForbidden: true }
+            : null;
+        })
+      );
+    };
+  }
+```
+
+```
+  asyncForbiddenMailsPrm(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> => {
+      return new Promise<any>((resolve, reject) => {
+        setTimeout(() => {
+          if (control.value === 'test@gmail.com') {
+            resolve({ mailForbidden: true });
+          } else {
+            resolve(null);
+          }
+        }, 1000);
+      });
+    };
+  }
+```
+
+and use it inside the control.
+
+```
+mail: new FormControl(
+  null,
+  [Validators.required, Validators.email, this.domains.bind(this)],
+  [this.asyncForbiddenMailsPrm(), this.asyncForbiddenMailsObs()]
+),
+```
+
+In these two functions you have a delay of 1 sec before the validation is checked.
+For async validators you do not need to use the `bind(this)` to consume a variable defined in the same component.
+
+If you inspect the DOM, after updating the mail, you can see that the class `ng-valid` or `ng-invalid` change to `ng-pending` and keep that status until the validation is done, to switch back to one of the `ng-valid` or `ng-invalid`.
 
 ### TS - Edit and reset form
 

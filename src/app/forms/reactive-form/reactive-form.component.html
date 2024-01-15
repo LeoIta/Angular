@@ -2,6 +2,15 @@
   <div formGroupName="personalData">
     <label>Name</label>
     <input formControlName="name">
+    <p *ngIf="myForm.get('personalData')?.get('name')?.touched && myForm.get('personalData')?.get('name')?.invalid">
+      <!-- You must enter a valid name! -->
+      <span *ngIf="myForm.get('personalData')?.get('name')?.hasError('required')">
+        Name cannot be empty!
+      </span>
+      <span *ngIf="myForm.get('personalData')?.get('name')?.hasError('nameForbidden')">
+        You must enter a valid name!
+      </span>
+    </p>
     <label>Gender</label>
     <input type="radio" formControlName="gender" value="male">male
     <input type="radio" formControlName="gender" value="female">female

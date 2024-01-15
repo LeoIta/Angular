@@ -29,3 +29,7 @@ form {
 label {
   font-weight: 600;
 }
+
+input.ng-touched.ng-invalid {
+  outline: red solid 2px;
+}
