@@ -349,28 +349,24 @@ Let's see with this approach how to:
 
 ### TS - Create basic form in code
 
-It is possible to create the form template directly using the code, usually it is done in the ngOnInit() when the component is initialized.
+It is possible to create the form template directly using the code.
 
-First you create a variable that will hold the form, e.g. `myForm`, that will be of type `FormGroup`:
-
-```
-myForm:!FormGroup
-```
-
-Now you can initialize the variable `myForm`. Each controls will be of type `FormControl`:
+You have to create a variable that will hold the form, e.g. `myForm`, that will be of type `FormGroup`, and each control will be of type `FormControl`:
 
 ```
-this.myForm = new FormGroup({
+myForm:FormGroup = new FormGroup({
       username: new FormControl(),
       'mail': new FormControl()
       });
 ```
 
+Here `username` and `'mail'` are the name of `controls`, and Angular can understand them both, with or without quotes.
+
 ### TS - Submit forms
 
-In HTML/CSS form, the submission is defined in the open tag form, defining `method` and `action` attributes, that usually use php script.
+In HTML/CSS form, the submission is defined in the open tag form, defining `method` and `action` attributes, that usually use `php script`.
 
-In Angular form can be used the angular event `(ngSubmit)`, like below, to handle the form submission:
+In Angular form, can be used the angular event `(ngSubmit)`, like below, to handle the form submission:
 
 ```
 <form (ngSubmit)="onSubmit()">
@@ -382,7 +378,7 @@ In Angular form can be used the angular event `(ngSubmit)`, like below, to handl
 </form>
 ```
 
-when users will push on the submit button, the onSubmit() method will be triggered.
+when users will click on the submit button, the onSubmit() method will be triggered.
 
 ### TS - How to sync HTML and TS form
 
@@ -442,9 +438,9 @@ and in the HTML you need to group all these controls inside a container, e.g. a 
 
 ### TS - Array of controls
 
-Sometimes you need to give possibility to add an array of values, e.g. list of certifications.
+Sometimes you need to give possibility to add an array of values, e.g. list of languages.
 
-In order to allow user to insert one or more value, you need to use the `formArray`, that are array of controls.
+In order to allow user to insert one or more values, you need to use the `formArray`, that is an array of controls.
 
 ```
     this.myForm = new FormGroup({
@@ -460,26 +456,38 @@ onAddLanguages() {
 }
 ```
 
+In the above you can see that you can get one specific control from the parent, in this case the main form, using two ways:
+
+- myForm.controls['languages']
+- myForm.get('languages')
+
 In order to get an array from the get controls of the form `myForm.get('languages')`, you need to cast to `<FormArray>`.
 
-Same if you want to pass it inside the HTML template, first you need to put inside the method `ngOnInit` the cast to map to a new variable:
+Same if you want to pass it inside the HTML template, first you need to put inside a `get` method:
 
 ```
-  languages!: FormArray;
-
-  ngOnInit(): void {
-    this.myForm = new FormGroup({
-      mail: new FormControl(),
-      languages: new FormArray([]),
-    });
-    this.languages = <FormArray>this.myForm.get('languages');
-  }
+get languages(): FormArray {
+  return this.myForm.get('languages') as FormArray;
+}
 ```
 
 To sync the HTML with the TS file you need to use the `formArrayName` directive:
 
 ```
 <div formArrayName="languages">
+```
+
+With the casted array , you can now iterate through the array in the HTML with \*ngFor:
+
+```
+<div formArrayName="languages">
+  <label>Known languages</label>
+  <button type="button" (click)="onAddLanguages()">
+  Add a language</button>
+  <div *ngFor="let item of languages.controls; let i = index">
+    <input type="text" [formControlName]="i">
+  </div>
+</div>
 ```
 
 ### TS - Default values and build-in validators
@@ -528,18 +536,37 @@ It is possible also to create custom validators.
 
 Could be possible that, in your form, you want to check if the email has one of the allowed domains, or name is one of the not allowed values.
 
-You can create a function like below:
+You can create a variable:
 
 ```
-names(control: FormControl): { [s: string]: boolean } | null {
-  if (this.forbiddenNames.indexOf(control.value) !== -1) {
-    return { nameForbidden: true };
-  }
-  return null;
-}
+forbiddenNames = ['God', 'Devil'];
 ```
 
-The custom validators must accept at least one argument, the `control: FormControl` and must return a `ValidationErrors` object `{ [s: string]: boolean }` or `null`.
+and use it inside a function that can return:
+
+1.  `ValidationErrors | null` that are actually `{ [s: string]: boolean } | null`.
+    ```
+    names(control: FormControl): { [s: string]: boolean } | null {
+      if (this.forbiddenNames.indexOf(control.value) !== -1) {
+        return { nameForbidden: true };
+      }
+      return null;
+    }
+    ```
+2.  `ValidatorFn` that is same of `(control: AbstractControl): ValidationErrors | null`
+    ```
+    names(): ValidatorFn {
+      return (control: AbstractControl) => {
+        return this.forbiddenNames.indexOf(control.value) !== -1
+          ? { nameForbidden: true }
+          : null;
+      };
+    }
+    ```
+
+In this first case the custom validators accept as argument the `control: FormControl`.
+
+In the second case the custom validators has no arguments, but the function inside has the abstract control `control: AbstractControl`.
 
 In order to use it, you need to add the method in the array of the validators:
 
@@ -551,7 +578,57 @@ name: new FormControl(null, [
 
 ```
 
-**Please note** that if you refer to a property of the component in the custom validator, you need to add `.bind(this)` to say to Angular to check this component when evaluate the control in the form. If you do not use the `bind` method, you'll get the error ` Cannot read properties of undefined`
+**Please note** that if you refer to a property of the component in the custom validator, you need to add `.bind(this)` to say to Angular to check this component when evaluate the control in the form. If you do not use the `bind` method, you'll get the error ` Cannot read properties of undefined`.
+
+To avoid using `.bind(this)`, it is better to pass the argument in the validator:
+
+```
+names(forbiddenNames:string[]): ValidatorFn {
+  return (control: AbstractControl) => {
+    return forbiddenNames.indexOf(control.value) !== -1
+      ? { nameForbidden: true }
+      : null;
+  };
+}
+```
+
+```
+names(control: FormControl, forbiddenNames:string[]):
+{ [s: string]: boolean } | null {
+  if (forbiddenNames.indexOf(control.value) !== -1) {
+    return { nameForbidden: true };
+  }
+  return null;
+}
+```
+
+And in the control:
+
+```
+name: new FormControl(null, [
+          Validators.required,
+          this.names(this.forbiddenNames),
+        ])
+
+```
+
+It is recommended to have validators in a separate class, like in [custom-validators.ts](../app/forms/reactive-form/custom-validators.ts)
+
+In this case you'll call method inside, that must be static, as below:
+
+```
+mail: new FormControl(
+      null,
+      [
+        Validators.required,
+        Validators.email,
+        CustomValidators.domainsRegex(this.allowedDomains),
+      ],
+      [CustomValidators.asyncForbiddenMailsPrm(), this.asyncForbiddenMailsObs()]
+    ),
+```
+
+using the name of the class containing the method instead of the key word `this`.
 
 ### TS - How to validate error message
 
@@ -581,9 +658,9 @@ name: new FormControl(null, [
         ]),
 ```
 
-but the error message is only on generic.
+but the error message is only one generic.
 
-You can give better details to the user if you know the exact error that validation returns.
+You can give better details to the user, if you know the exact error that validation returns.
 
 Here become useful the `error codes` that appear under the specific controller inside `errors`
 
