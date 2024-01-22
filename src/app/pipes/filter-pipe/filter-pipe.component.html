@@ -1,0 +1,23 @@
+<h1>Filter pipe</h1>
+<label>Filter Name</label><input name="name" [(ngModel)]="filterName">
+<label>Filter Team</label><input name="team" [(ngModel)]="filterTeam">
+<label>Filter Number</label><input name="num" [(ngModel)]="filterNum">
+<label for="sortBy">Sort by</label>
+<select name="sortBy" [(ngModel)]="sortByKey">
+  <option value="name">name</option>
+  <option value="team">team</option>
+  <option value="num">number</option>
+</select>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Team</th>
+    <th>Number</th>
+  </tr>
+  <tr
+    *ngFor="let item of players | filter:filterName:'name'| filter:filterTeam:'team'| filter:filterNum:'num'|sort:sortByKey">
+    <td>{{item.name}}</td>
+    <td>{{item.team}}</td>
+    <td>{{item.num}}</td>
+  </tr>
+</table>

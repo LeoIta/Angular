@@ -23,6 +23,7 @@ Index:
 6. [Services](#services)
 7. [Routing](#routing)
 8. [Forms](#forms)
+9. [Pipes](#pipes)
 
 ## Run the application
 
@@ -148,3 +149,21 @@ In the first case you handle the form mostly in the HTML template (useful for ea
 In the second case you handle the form with use of TypeScript. (suggested for more complicated operation related with the form).
 
 More details can be found in [forms.md](./src/documentation/forms.md) or on Angular documentation about [Angular forms](https://angular.dev/guide/forms)
+
+## Pipes
+
+`Pipes` are simple functions to use in HTML template expressions to accept an input value and return a transformed value, e.g. `uppercase`, to change in uppercase a string.
+
+`Pipes` are useful because you can use them throughout your application, while only declaring each pipe once.
+
+You can create your own custom pipes, or apply multiple pipes.
+
+You apply pipes when you use the string interpolation, just adding the `pipe` method after a pipe `|`:
+
+```
+{{'world | uppercase}}
+```
+
+will display `WORLD`
+
+More details can be found in [pipes.md](./src/documentation/pipes.md) or on Angular documentation about [Angular pipes](https://angular.dev/guide/pipes)

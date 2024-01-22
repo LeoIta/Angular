@@ -1,0 +1,31 @@
+<p>{{5|double}}</p>
+<p>{{'abcdefghijklmopqrstuvwxyz'|substring:15:16|uppercase}}</p>
+<p>{{'abcdefghijklmopqrstuvwxyz'|optsubstring:{start:15}|uppercase}}</p>
+{{10|double|currency}}
+<p>{{asyncValue}}</p>
+<p>{{asyncValue | async}}</p>
+<p>{{'Hello'}}</p>
+<p>{{'Hello'|uppercase}}</p>
+<p>{{'Hello'|lowercase}}</p>
+<p>{{ 5 | number:'1.2-4'}}</p>
+<p>{{ 5 | number:'3.0-10'}}</p>
+<p>{{ 3.1456789 | number:'1.2-4'}}</p>
+<p>{{ 0.1456789 | percent:'1.2-4'}}</p>
+<p>{{ 3.1456789 | currency}}</p>
+<p>{{ 3.1456789 | currency:'GBP'}}</p>
+<p>{{ 100/3 | number:'1.2-4' | currency:'EUR'}}</p>
+<p>{{ 100/3 |currency:'EUR':'code':'2.2'}}</p>
+<p>{{ 100/3 |currency:'Y':'symbol':'2.2'}}</p>
+<p>{{today}} = Date.now()</p>
+<p>{{today | date}}</p>
+<p>shortTime: {{today | date:'shortTime'}}</p>
+<p>short: {{today | date:'short'}}</p>
+<p>medium: {{today | date:'medium'}}</p>
+<p>long: {{today | date:'long'}}</p>
+<p>full: {{today | date:'full'}}</p>
+<p>custom 'EEE dd MMM YYYY hh:mm': {{today | date:'EEE dd MMM YYYY hh:mm'}}</p>
+<p>{{today | date:'dd/MM/YY HH:mm':'UTC+05:00'}}</p>
+<p>{{today | date:'dd/MM/YY hh:mm':'UTC+05:00'}}</p>
+<p>{{today | date:'dd/MM/YY hh:mm aa':'UTC+05:00'}}</p>
+<p>{{today | date:'dd/MM/YY hh:mm':'GMT+03'}}</p>
+<p>{{today | date:'dd/MM/YY hh:mm':'EST'}}</p>

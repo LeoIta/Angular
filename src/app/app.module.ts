@@ -55,6 +55,13 @@ import { BasicNgFormComponent } from './forms/td-template/basic-ngForm.component
 import { BasicControlNgModelComponent } from './forms/td-template/basic-control-ngModel.component';
 import { BasicValidatorsComponent } from './forms/td-template/basic-validators.component';
 import { ReactiveFormComponent } from './forms/reactive-form/reactive-form.component';
+import { PipeComponent } from './pipes/pipe/pipe.component';
+import { DoublePipe } from './pipes/double.pipe';
+import { SubStringPipe } from './pipes/substring.pipe';
+import { OptsubstringPipe } from './pipes/optsubstring.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
+import { FilterPipeComponent } from './pipes/filter-pipe/filter-pipe.component';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -109,6 +116,13 @@ import { ReactiveFormComponent } from './forms/reactive-form/reactive-form.compo
     BasicControlNgModelComponent,
     BasicValidatorsComponent,
     ReactiveFormComponent,
+    PipeComponent,
+    DoublePipe,
+    SubStringPipe,
+    OptsubstringPipe,
+    FilterPipe,
+    FilterPipeComponent,
+    SortPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [MainService],
