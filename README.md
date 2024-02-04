@@ -24,6 +24,7 @@ Index:
 7. [Routing](#routing)
 8. [Forms](#forms)
 9. [Pipes](#pipes)
+10. [HTTP requests](#HTTP requests)
 
 ## Run the application
 
@@ -167,3 +168,13 @@ You apply pipes when you use the string interpolation, just adding the `pipe` me
 will display `WORLD`
 
 More details can be found in [pipes.md](./src/documentation/pipes.md) or on Angular documentation about [Angular pipes](https://angular.dev/guide/pipes)
+
+## HTTP requests
+
+Often front end applications need to store data, but they never connect directly with any database.
+
+The front end applications communicate with databases thanks to back end services.
+
+In order to communicate with these services, Angular allows you to make API requests using the HTTP module.
+
+More details can be found in [http.md](./src/documentation/http.md)

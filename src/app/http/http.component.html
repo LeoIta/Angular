@@ -1,0 +1,23 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="userForm" *ngIf="errorMessage===''; else onError">
+  <label>Name</label>
+  <input type="text" name="name" formControlName="name">
+  <button type="button" [disabled]="id===''" (click)="onPatch('name')">Update name</button>
+  <label>Mail</label>
+  <input type="mail" name="mail" formControlName="mail">
+  <button type="button" [disabled]="id===''" (click)="onPatch('mail')">Update mail</button>
+  <label>Age</label>
+  <input type="number" name="age" formControlName="age">
+  <button type="button" [disabled]="id===''" (click)="onPatch('age')">Update age</button>
+  <hr>
+  <button type="submit" [disabled]="userForm.invalid">{{id===''?'Create User':'Update User'}}</button>
+  <button type="button" (click)="onDelete()" [disabled]="id===''">Delete User</button>
+  <button type="button" (click)="onCancel()">Reset</button>
+</form>
+<ng-template #onError>
+  <p class="error">{{errorMessage}}</p>
+  <button type="button" (click)="errorMessage=''">Retry</button>
+</ng-template>
+<hr>
+<button type="button" (click)="onCustomPostBody()">Observe Body</button>
+<button type="button" (click)="onCustomPostResponse()">Observe Response</button>
+<button type="button" (click)="onCustomPostEvents()">Observe Events</button>

@@ -12,6 +12,8 @@ import { UnauthorizedComponent } from './routing/unauthorized/unauthorized.compo
 import { authEditGuard } from './routing/guards/auth-edit.guard';
 import { matchGuard } from './routing/guards/match.guard';
 import { userResolver } from './routing/resolvers/user.resolver';
+import { HttpResolver } from './http/http.resolver';
+import { ManageUsersComponent } from './http/manage-users/manage-users.component';
 // import { AboutComponent } from './basic-routing/about/about.component';
 // import { ContactsComponent } from './basic-routing/contacts/contacts.component';
 // import { HomeComponent } from './basic-routing/home/home.component';
@@ -21,7 +23,15 @@ const routes: Routes = [
   // { path: 'about', component: AboutComponent },
   // { path: 'contacts', component: ContactsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: RoutingHomeComponent },
+  {
+    path: 'home',
+    component: RoutingHomeComponent,
+  },
+  {
+    path: 'http',
+    component: ManageUsersComponent,
+    resolve: { customers: HttpResolver },
+  },
   {
     path: 'about',
     component: RoutingAboutComponent,

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,6 +63,8 @@ import { OptsubstringPipe } from './pipes/optsubstring.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
 import { FilterPipeComponent } from './pipes/filter-pipe/filter-pipe.component';
 import { SortPipe } from './pipes/sort.pipe';
+import { HttpComponent } from './http/http.component';
+import { ManageUsersComponent } from './http/manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
@@ -123,8 +126,16 @@ import { SortPipe } from './pipes/sort.pipe';
     FilterPipe,
     FilterPipeComponent,
     SortPipe,
+    HttpComponent,
+    ManageUsersComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   providers: [MainService],
   bootstrap: [AppComponent],
 })

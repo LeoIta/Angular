@@ -1,0 +1,37 @@
+form {
+  padding: 5px;
+  margin: 0 5px 5px 5px;
+  border: 1px black solid;
+  width: 40vw;
+  background-color: whitesmoke;
+}
+
+input,
+button,
+label {
+  padding: 10px;
+  margin: 5px;
+  background-color: lightcyan;
+}
+label {
+  display: block;
+  background-color: inherit;
+  font-weight: 600;
+  padding-left: 0%;
+}
+
+button {
+  width: 10vw;
+  background-color: lightblue;
+}
+
+button[type="submit"] {
+  margin: 10px 5%;
+}
+
+.error {
+  background-color: salmon;
+  height: fit-content;
+  padding: 10px;
+  margin: 5px;
+}
