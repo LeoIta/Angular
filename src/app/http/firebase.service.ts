@@ -21,14 +21,17 @@ export class FirebaseService {
 
   post(body: HttpUser) {
     // return this.httpClient.post(`${this.url}user.json`, body);
-    return this.httpClient
-      .post<{ name: string }>(`${this.url}user.json`, body)
-      .pipe(
-        catchError((catError) => {
-          console.log('error caught');
-          return throwError(() => catError);
-        })
-      );
+    return (
+      this.httpClient
+        // .post<{ name: string }>(`${this.url}user.json`, body) //without interceptor
+        .post<{ name: string }>(`${this.url}user`, body) //with interceptor
+        .pipe(
+          catchError((catError) => {
+            console.log('error caught');
+            return throwError(() => catError);
+          })
+        )
+    );
   }
 
   customPostResponse(body: HttpUser) {
@@ -47,22 +50,26 @@ export class FirebaseService {
     const myContext = new HttpContext().set(IS_CACHE_ENABLED, true);
     const observableValue = 'response';
 
-    return this.httpClient
-      .post<{ name: string }>(`${this.url}user.json`, body, {
-        headers: myHeaders,
-        context: myContext,
-        observe: observableValue,
-        params: myParams,
-        // reportProgress: true,
-        responseType: 'json',
-        // withCredentials: false,
-      })
-      .pipe(
-        tap((httpResponse) => {
-          console.log(observableValue);
-          console.log(httpResponse);
+    return (
+      this.httpClient
+        // .post<{ name: string }>(`${this.url}user.json`, body, { //without interceptor
+        .post<{ name: string }>(`${this.url}user`, body, {
+          //with interceptor
+          headers: myHeaders,
+          context: myContext,
+          observe: observableValue,
+          params: myParams,
+          // reportProgress: true,
+          responseType: 'json',
+          // withCredentials: false,
         })
-      );
+        .pipe(
+          tap((httpResponse) => {
+            console.log(observableValue);
+            console.log(httpResponse);
+          })
+        )
+    );
   }
 
   customPostEvents(body: HttpUser) {
@@ -83,7 +90,7 @@ export class FirebaseService {
     const observableValue = 'events';
 
     return this.httpClient
-      .post<{ name: string }>(`${this.url}user.json`, body, {
+      .post<{ name: string }>(`${this.url}user`, body, {
         headers: myHeaders,
         context: myContext,
         observe: observableValue,
@@ -152,7 +159,7 @@ export class FirebaseService {
     const observableValue = 'body';
 
     return this.httpClient
-      .post<{ name: string }>(`${this.url}user.json`, body, {
+      .post<{ name: string }>(`${this.url}user`, body, {
         headers: myHeaders,
         context: myContext,
         observe: observableValue,
@@ -170,21 +177,19 @@ export class FirebaseService {
   }
 
   put(body: HttpUser, id: string) {
-    return this.httpClient
-      .put<HttpUser>(`${this.url}user/${id}.json`, body)
-      .pipe(
-        tap((answer) => {
-          console.log('update customer with name: ' + answer.name);
-        }),
-        catchError((catError) => {
-          console.log('error caught');
-          return throwError(() => catError);
-        })
-      );
+    return this.httpClient.put<HttpUser>(`${this.url}user/${id}`, body).pipe(
+      tap((answer) => {
+        console.log('update customer with name: ' + answer.name);
+      }),
+      catchError((catError) => {
+        console.log('error caught');
+        return throwError(() => catError);
+      })
+    );
   }
 
   putWithoutType(body: HttpUser, id: string) {
-    return this.httpClient.put(`${this.url}user/${id}.json`, body).pipe(
+    return this.httpClient.put(`${this.url}user/${id}`, body).pipe(
       tap((answer) => {
         console.log('update customer with name: ' + (<HttpUser>answer).name);
       })
@@ -193,30 +198,28 @@ export class FirebaseService {
 
   patch(body: any, id: string) {
     // return this.httpClient.patch(`${this.url}user/${id}.json`, body);
-    return this.httpClient.patch(`${this.url}user/${id}.json`, body);
+    return this.httpClient.patch(`${this.url}user/${id}`, body);
   }
 
   getAll() {
     // return this.httpClient.get(
-    return this.httpClient.get<{ [key: string]: HttpUser }>(
-      `${this.url}user.json`
-    );
+    return this.httpClient.get<{ [key: string]: HttpUser }>(`${this.url}user`);
   }
 
   getAllWithoutType() {
-    return this.httpClient.get(`${this.url}user.json`);
+    return this.httpClient.get(`${this.url}user`);
   }
 
   getSingle(id: string) {
     // return this.httpClient.get(
     return this.httpClient.get<{ [key: string]: HttpUser }>(
-      `${this.url}user/${id}.json`
+      `${this.url}user/${id}`
     );
   }
 
   delete(id: string) {
     // return this.httpClient.delete(`${this.url}user/${id}.json`);
-    return this.httpClient.delete<void>(`${this.url}user/${id}.json`);
+    return this.httpClient.delete<void>(`${this.url}user/${id}`);
   }
 
   retrieveCustomersWithoutType() {

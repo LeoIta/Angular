@@ -24,7 +24,7 @@ Index:
 7. [Routing](#routing)
 8. [Forms](#forms)
 9. [Pipes](#pipes)
-10. [HTTP requests](#HTTP requests)
+10. [HTTP requests](#http-requests)
 
 ## Run the application
 

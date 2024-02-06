@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -65,6 +65,8 @@ import { FilterPipeComponent } from './pipes/filter-pipe/filter-pipe.component';
 import { SortPipe } from './pipes/sort.pipe';
 import { HttpComponent } from './http/http.component';
 import { ManageUsersComponent } from './http/manage-users/manage-users.component';
+import { AuthInterceptor } from './http/auth.interceptor';
+import { ResponseInterceptor } from './http/response.interceptor';
 
 @NgModule({
   declarations: [
@@ -136,7 +138,19 @@ import { ManageUsersComponent } from './http/manage-users/manage-users.component
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [MainService],
+  providers: [
+    MainService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

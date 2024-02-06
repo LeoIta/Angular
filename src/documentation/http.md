@@ -511,3 +511,114 @@ As from the above definition, the response type can assume four possile values:
 4. `text` - plain text, unformatted text
 
 ## HTTP interceptors
+
+The `interceptors` are services that intercept the HTTP requests and allow to change the requests or the responses.
+
+In order to create automatically a basic interceptor using the terminal, you can use:
+`ng generate interceptor auth` or `ng g interceptor auth`
+
+it will generate two files:
+
+- auth.interceptor.ts
+- auth.interceptor.spec.ts
+
+If you are not interested in tests, you can add at the end of the command:
+`--skip-tests=true`
+
+**please note** that in this case you cannot use the shorter command `ng g i auth` because it will generate one file, an interface auth.ts and not an interceptor
+
+```
+export interface Auth {}
+```
+
+The basic structure of an interceptor is:
+
+```
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor() {}
+
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
+    return next.handle(request);
+  }
+}
+```
+
+The interceptor is a service that has to implement the `HttpInterceptor`, and the `intercept` method that accepts two arguments:
+
+- `request:HttpRequest<unknown>`
+- `next: HttpHandler`
+  and return:
+- `next.handle(request)`
+
+**N.B.** To edit the request, you need to clone it, edit it and return the cloned one, the direct edition is not allowed.
+
+One of the most common reasons to use interceptors, is to add auth headers to the calls made by the application, but you can do a lot more.
+
+`Changes to the request` can be done inside the `intercept function`:
+
+```
+intercept(
+   request: HttpRequest<unknown>,
+   next: HttpHandler): Observable<HttpEvent<unknown>>  {
+   request = request.clone({
+      url: request.url.concat('.json'),
+      headers: request.headers.append('Auth', 'xyz'),
+      });
+   return next.handle(request);
+   }
+```
+
+In this case you edit the `url` and the `headers`.
+
+`Changes to the response` can be done after the handle method, using the pipe method.
+
+```
+intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler): Observable<HttpEvent<unknown>> {
+    return next.handle(request).pipe(
+      tap((event) => {
+        if (event.type === HttpEventType.Response) {
+          console.log('body');
+          console.log(event.body);
+        }
+      })
+    );
+  }
+```
+
+From the previous example you can notice that the interceptor returns `HttpEvent`, and you are doing something only in case the type is `response`
+
+Created services that implement `HttpInterceptor`is not enough to have working interceptors. Like the services, to trigger them you need to defined them in `AppModule` inside the `providers`
+
+```
+providers: [
+   MainService,
+   {
+   provide: HTTP_INTERCEPTORS,
+   useClass: AuthInterceptor,
+   multi: true,
+   },
+   {
+   provide: HTTP_INTERCEPTORS,
+   useClass: ResponseInterceptor,
+   multi: true,
+   },
+],
+```
+
+The difference with normal service is that:
+
+- to initialize and use any service it is enough to put its name inside the providers array (e.g. `MainService`)
+- to initialize and use interceptors, you need to add inside the providers an object with three parameters:
+  1.  `provide: HTTP_INTERCEPTORS` same value for each interceptor
+  2.  `useClass` has as value the name of the interceptor
+  3.  `multi` usually set to true to allow use of multiple interceptors
+
+When you want to use more than one interceptor, it is enough to add another object with the three parameters defined as above.
+
+**Please note** that the interceptors will be executed from top to the bottom in the providers array, so the order in which you write them inside the providers is important as in some case could change the final result.
