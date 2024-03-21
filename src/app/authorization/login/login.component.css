@@ -1,0 +1,30 @@
+form {
+  padding: 10px;
+  margin: 10vh auto;
+  border: 1px solid black;
+  max-width: fit-content;
+  font-size: larger;
+}
+
+input {
+  padding: 5px;
+}
+
+label {
+  display: block;
+}
+
+button {
+  margin-top: 5px;
+  width: 100%;
+  background-color: rgb(9, 251, 9);
+  font-size: large;
+}
+
+.error {
+  background-color: salmon;
+  text-align: center;
+  max-width: fit-content;
+  margin: 10vh auto;
+  padding: 10px;
+}

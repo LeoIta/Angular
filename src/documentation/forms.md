@@ -418,7 +418,7 @@ In this way Angular will be able to detect the controls value:
 
 ![form Controls sync](../assets/syncrhronized-form-controls.jpg "form Controls sync").
 
-In case you want to group the controls in groups, in ts we use `FormGroup()`
+In case you want to group the controls in groups, in ts you use `FormGroup()`
 
 ```
 this.myForm = new FormGroup({
@@ -676,7 +676,7 @@ Here become useful the `error codes` that appear under the specific controller i
 </p>
 ```
 
-Here we have a customized error message based on the actual error validation; to call it you have to call the controller (`myForm.get('personalData')?.get('name')`) and use the `hasError()` method with argument the error name.
+Here you have a customized error message based on the actual error validation; to call it you have to call the controller (`myForm.get('personalData')?.get('name')`) and use the `hasError()` method with argument the error name.
 
 ### TS - Create custom async validators
 

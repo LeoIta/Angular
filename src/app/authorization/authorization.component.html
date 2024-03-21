@@ -1,0 +1,11 @@
+<nav id="nav">
+  <div>
+    <a routerLink="/main">Home</a>
+    <a (click)="toTeams()">Teams</a>
+  </div>
+  <div>
+    <a *ngIf="!isAuthenticated" routerLink="/login">Login</a>
+    <a *ngIf="isAuthenticated" (click)="logout()">Logout</a>
+  </div>
+</nav>
+<router-outlet></router-outlet>

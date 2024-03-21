@@ -58,7 +58,7 @@ To make a valid request, the client needs to include some things:
 
 ## How to make HTTP requests
 
-In order to make requests, we have two requirements:
+In order to make requests, you have two requirements:
 
 1. to have a valid API to use
 2. to add `HttpClientModule` in app.module inside the imports array.

@@ -1,0 +1,10 @@
+<div class="error" *ngIf="error">{{error}}</div>
+<form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" (click)="resetError()">
+  <label for="email">Email</label>
+  <input type="email" name="email" required email ngModel>
+  <label for="password">Password</label>
+  <input type="password" name="password" required ngModel minlength="6">
+  <hr>
+  <button type="submit" [disabled]="authForm.invalid">{{loginMode?'Login':'Sign Up'}}</button>
+  <button type="button" (click)="onSwitch()">Switch to {{!loginMode?'Login':'Sign Up'}}</button>
+</form>

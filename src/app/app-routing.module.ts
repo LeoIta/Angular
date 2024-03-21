@@ -14,6 +14,11 @@ import { matchGuard } from './routing/guards/match.guard';
 import { userResolver } from './routing/resolvers/user.resolver';
 import { HttpResolver } from './http/http.resolver';
 import { ManageUsersComponent } from './http/manage-users/manage-users.component';
+import { AuthorizationComponent } from './authorization/authorization.component';
+import { LoginComponent } from './authorization/login/login.component';
+import { logGuard } from './authorization/log.guard';
+import { MainComponent } from './authorization/main/main.component';
+import { TeamComponent } from './authorization/team/team.component';
 // import { AboutComponent } from './basic-routing/about/about.component';
 // import { ContactsComponent } from './basic-routing/contacts/contacts.component';
 // import { HomeComponent } from './basic-routing/home/home.component';
@@ -22,7 +27,10 @@ const routes: Routes = [
   // { path: '', component: HomeComponent },
   // { path: 'about', component: AboutComponent },
   // { path: 'contacts', component: ContactsComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  { path: 'main', component: MainComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'teams', component: TeamComponent, canMatch: [logGuard] },
   {
     path: 'home',
     component: RoutingHomeComponent,

@@ -1,0 +1,14 @@
+#nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 15px;
+  flex-direction: row;
+  background-color: whitesmoke;
+}
+
+a {
+  text-decoration: none;
+  padding: 5px;
+  color: initial;
+  cursor: pointer;
+}

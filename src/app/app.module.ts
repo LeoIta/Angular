@@ -67,6 +67,9 @@ import { HttpComponent } from './http/http.component';
 import { ManageUsersComponent } from './http/manage-users/manage-users.component';
 import { AuthInterceptor } from './http/auth.interceptor';
 import { ResponseInterceptor } from './http/response.interceptor';
+import { AuthorizationComponent } from './authorization/authorization.component';
+import { LoginComponent } from './authorization/login/login.component';
+import { TeamComponent } from './authorization/team/team.component';
 
 @NgModule({
   declarations: [
@@ -130,6 +133,9 @@ import { ResponseInterceptor } from './http/response.interceptor';
     SortPipe,
     HttpComponent,
     ManageUsersComponent,
+    AuthorizationComponent,
+    LoginComponent,
+    TeamComponent,
   ],
   imports: [
     BrowserModule,
@@ -140,16 +146,16 @@ import { ResponseInterceptor } from './http/response.interceptor';
   ],
   providers: [
     MainService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ResponseInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true,
+    // },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: ResponseInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

@@ -25,6 +25,7 @@ Index:
 8. [Forms](#forms)
 9. [Pipes](#pipes)
 10. [HTTP requests](#http-requests)
+11. [Authentication and route protection](#authentication-and-route-protection)
 
 ## Run the application
 
@@ -178,3 +179,11 @@ The front end applications communicate with databases thanks to back end service
 In order to communicate with these services, Angular allows you to make API requests using the HTTP module.
 
 More details can be found in [http.md](./src/documentation/http.md)
+
+## Authentication and route protection
+
+In most of the cases, the application are protected by authentication. Without a valid account, the customers cannot visit all the pages of the website.
+
+To manage it, Angular uses HTTP Client, and guards.
+
+More details can be found in [authentication.md](./src/documentation/authentication.md)
