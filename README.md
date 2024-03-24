@@ -26,6 +26,7 @@ Index:
 9. [Pipes](#pipes)
 10. [HTTP requests](#http-requests)
 11. [Authentication and route protection](#authentication-and-route-protection)
+12. [How to add a component programmatically](#how-to-add-a-component-programmatically)
 
 ## Run the application
 
@@ -187,3 +188,15 @@ In most of the cases, the application are protected by authentication. Without a
 To manage it, Angular uses HTTP Client, and guards.
 
 More details can be found in [authentication.md](./src/documentation/authentication.md)
+
+## How to add a component programmatically
+
+In Angular you can manage to display and hide components in three ways:
+
+1. using the [routing](#routing)
+2. using the [structure directive](#directives)
+3. using viewContainer
+
+Last option allow you to create / destory a component programmatically, using source code, with just a method.
+
+Let's see more details in [component-programmatically-creation.md](./src/documentation/component-programmatically-creation.md)

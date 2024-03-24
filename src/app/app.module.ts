@@ -70,6 +70,9 @@ import { ResponseInterceptor } from './http/response.interceptor';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { LoginComponent } from './authorization/login/login.component';
 import { TeamComponent } from './authorization/team/team.component';
+import { PageComponent } from './component-programmatically-creation/page/page.component';
+import { AlertComponent } from './component-programmatically-creation/alert/alert.component';
+import { PositionDirective } from './component-programmatically-creation/position.directive';
 
 @NgModule({
   declarations: [
@@ -136,6 +139,9 @@ import { TeamComponent } from './authorization/team/team.component';
     AuthorizationComponent,
     LoginComponent,
     TeamComponent,
+    PageComponent,
+    AlertComponent,
+    PositionDirective,
   ],
   imports: [
     BrowserModule,
