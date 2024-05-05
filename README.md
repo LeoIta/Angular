@@ -27,6 +27,7 @@ Index:
 10. [HTTP requests](#http-requests)
 11. [Authentication and route protection](#authentication-and-route-protection)
 12. [How to add a component programmatically](#how-to-add-a-component-programmatically)
+13. [Modules](#modules)
 
 ## Run the application
 
@@ -200,3 +201,15 @@ In Angular you can manage to display and hide components in three ways:
 Last option allow you to create / destory a component programmatically, using source code, with just a method.
 
 Let's see more details in [component-programmatically-creation.md](./src/documentation/component-programmatically-creation.md)
+
+## Modules
+
+Angular modules are containers for a particular block of code that adheres to the same functionality.
+
+The role of an Angular module is to group all the artifacts of an Angular application that share common functionality.
+
+A typical Angular application contains at least a main module called `AppModule` that is defined in the `app.module.ts`.
+
+Let's see more details in [modules.md](./src/documentation/modules.md)
+
+You can read more also in the [AngularDocumetation](https://angular.io/guide/ngmodules)
